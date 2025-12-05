@@ -1,0 +1,36 @@
+<?php
+
+use App\Http\Controllers\Settings\PasswordController;
+use App\Http\Controllers\Settings\ProfileController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+Route::middleware('auth')->group(function () {
+    Route::redirect('settings', 'settings/profile');
+
+    Route::get('settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('settings/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('settings/password', [PasswordController::class, 'edit'])->name('password.edit');
+    Route::put('settings/password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::get('settings/appearance', function (Request $request) {
+        
+        /** @var \App\Models\User $user */
+
+        $user = Auth::user();
+        $user->load('avatar');
+
+        return Inertia::render('settings/appearance',[
+            'user' => $user,
+         'rooms' => Auth::check() ? Room::whereHas('users', function ($query) use ($request) {
+                $query->where('user_id', $request->user()->id);
+            })->with(['users.avatar', 'messages.images','messages.user.avatar'])->get() : [], // Return an empty array if the user is not authenticated
+        ]
+    );
+    })->name('appearance');
+});
