@@ -37,7 +37,7 @@ test('user can upload images', function () {
     $file = UploadedFile::fake()->image('test.jpg')->size(1024);
 
     Storage::fake('images')->put($file->hashName(), file_get_contents($file));
-
+//
 
     $response = $this->actingAs($user)->post('/rooms/'.$room->id, [
         'images' => [$file],
