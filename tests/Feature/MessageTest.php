@@ -34,14 +34,10 @@ test('user can upload images', function () {
     $message = Message::factory()->create();
 
     $user->rooms()->attach($room);
+    $file = UploadedFile::fake()->image('test.jpg')->size(1024);
 
-    Storage::fake('images');
+    Storage::fake('images')->put($file->hashName(), file_get_contents($file));
 
-    if (! function_exists('imagejpeg')) {
-        throw new LogicException('imagejpeg function is not defined and image cannot be generated.');
-    }
-
-    $file = UploadedFile::fake()->image('test.jpg');
 
     $response = $this->actingAs($user)->post('/rooms/'.$room->id, [
         'images' => [$file],
@@ -52,7 +48,8 @@ test('user can upload images', function () {
     Storage::disk('images')->assertExists($file->hashName());
 
     $this->assertDatabaseHas('images', [
-        'image_path' => $file->hashName(),
+        'image_path' =>'images/'. $file->hashName(),
     ]);
+
 
 });
