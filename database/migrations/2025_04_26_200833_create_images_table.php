@@ -14,16 +14,8 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('image_path')->nullable();
-            $table->foreignId('message_id')->constrained()->onDelete('cascade');
+            $table->foreignId('message_id');
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('images');
     }
 };

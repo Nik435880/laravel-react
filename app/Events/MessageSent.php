@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Events;
-
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,22 +14,17 @@ class MessageSent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     protected $message;
-    protected $room; // Add room reference
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message, $room)
+    public function __construct($message)
     {
         $this->message = $message->load(['images', 'user.avatar']);
-        $this->room = $room; // Assign the passed room to a property
+       
     }
 
-    public function getRoom()
-    {
-        return $this->room->id;
-    }
-
+  
     public function broadcastWith()
     {
         return [
@@ -61,7 +55,7 @@ class MessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('room.' . $this->getRoom()), // Use the updated room property here
+            new PresenceChannel('room.' . $this->message->room_id), // Use the updated room property here
         ];
     }
 }

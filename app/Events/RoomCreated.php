@@ -2,14 +2,12 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use App\Models\Room;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Room;
 
 class RoomCreated implements ShouldBroadcastNow
 {
@@ -28,17 +26,12 @@ class RoomCreated implements ShouldBroadcastNow
             'room' => [
                 'id' => $this->room->id,
                 'name' => $this->room->name,
-                "messages" => $this->room->messages->load('user.avatar', 'images'),
-                'users'=> $this->room->users->load('avatar'),
-
-                
-
+                'messages' => $this->room->messages->load('user.avatar', 'images'),
+                'users' => $this->room->users->load('avatar'),
             ],
 
         ];
     }
-
-
 
     /**
      * Get the channels the event should broadcast on.

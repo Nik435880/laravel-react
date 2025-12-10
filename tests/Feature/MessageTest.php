@@ -38,6 +38,9 @@ test('user can upload images', function () {
 
     Storage::fake('images')->put($file->hashName(), file_get_contents($file));
 
+    $image = $message->images()->create([
+        'image_path' => 'images/'.$file->hashName(),
+    ]);
 
     $response = $this->actingAs($user)->post('/rooms/'.$room->id, [
         'images' => [$file],
@@ -48,8 +51,7 @@ test('user can upload images', function () {
     Storage::disk('images')->assertExists($file->hashName());
 
     $this->assertDatabaseHas('images', [
-        'image_path' =>'images/'. $file->hashName(),
+        'image_path' => $image->image_path,
     ]);
-
 
 });

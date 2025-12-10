@@ -2,7 +2,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
 import { DialogClose } from './dialog';
 import { Button } from './button';
-import { Message,Image } from '@/types';
+import { Message, Image } from '@/types';
 
 export function ListItem({
     message

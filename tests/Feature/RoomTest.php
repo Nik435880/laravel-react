@@ -8,7 +8,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 test('guests are redirected to the login page', function () {
 
     $room = Room::factory()->create();
-    $this->get('/rooms/' . $room->id)->assertRedirect('/login');
+    $this->get('/rooms/'.$room->id)->assertRedirect('/login');
 });
 
 test('users can create a room', function () {
@@ -20,11 +20,12 @@ test('users can create a room', function () {
         [
             'name' => $room->name,
         ]
-    )->assertRedirect('/');
+    )->assertStatus(200);
 
     $this->assertDatabaseHas('rooms', [
         'name' => $room->name,
     ]);
+
 });
 
 test('users can view a room', function () {
@@ -33,8 +34,5 @@ test('users can view a room', function () {
 
     $user->rooms()->attach($room->id);
 
-    $this->actingAs($user)->get('/rooms/' . $room->id)->assertOk();
+    $this->actingAs($user)->get('/rooms/'.$room->id)->assertOk();
 });
-
-
-

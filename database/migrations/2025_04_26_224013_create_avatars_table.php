@@ -13,17 +13,11 @@ return new class extends Migration
     {
         Schema::create('avatars', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar_path')->default('default.jpg');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('avatar_path')->nullable();
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('avatars');
-    }
+ 
 };

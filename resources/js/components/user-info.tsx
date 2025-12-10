@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: boolean }) {
     const getInitials = useInitials();
-  
+
     return (
         <>
             <Avatar className="h-8 w-8 overflow-hidden rounded-full">
