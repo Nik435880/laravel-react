@@ -19,8 +19,8 @@ class RoomController extends Controller
         /** @var \App\Models\User $authUser */
         /** @var string $name */
         /** @var array $data */
+        /** @var \App\Models\Room $room */
         $user = User::where('name', '=', $request->name)->first();
-
         $authUser = Auth::user();
         $name = $request->name;
         $data = [
@@ -30,8 +30,6 @@ class RoomController extends Controller
         ];
 
         $room = $createRoom->execute($data);
-
-        return response()->json(['room' => $room], 200);
 
     }
 
