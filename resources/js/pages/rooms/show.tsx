@@ -40,7 +40,7 @@ export default function Show({
         <AppLayout>
             <div>
                 <div>
-                    <ul className="overflow-y-auto h-[calc(100svh-117px)] "
+                    <ul className="overflow-y-auto scrollbar h-[calc(100vh-130px)] flex flex-col"
                         ref={messageRef}>
                         {messages.map((message: {
                             text: string;
@@ -55,7 +55,7 @@ export default function Show({
 
 
                 </div>
-                <Form method='POST' className='flex items-center gap-1 p-2 border-t' action={`/rooms/${room.id}`} encType="multipart/form-data" resetOnSuccess>
+                <Form method='POST' className='flex items-center gap-1 p-2 border-t dark:border-sidebar-border h-16' action={`/rooms/${room.id}`} encType="multipart/form-data" resetOnSuccess >
 
                     <Input type="text" name='text' id='text' placeholder='Enter message...' autoComplete='off'
                     />

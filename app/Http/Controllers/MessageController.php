@@ -12,6 +12,11 @@ class MessageController extends Controller
     public function store(MessageRequest $request, Room $room, CreateMessage $createMessage)
     {
 
+        /** @var int $user_id */
+        /** @var string $text */
+        /** @var array $images */
+        /** @var array $data */
+        /** @var \App\Models\Message $message */
         $user_id = Auth::id();
         $text = $request->input('text');
         $images = $request->file('images', []);

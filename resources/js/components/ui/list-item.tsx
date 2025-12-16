@@ -9,7 +9,7 @@ export function ListItem({
 }: { message: Message }) {
     return (
         <li className='border-b last:border-b-0'>
-            <div className='flex flex-col justify-center p-2 gap-1 '>
+            <div className='p-4'>
                 <div className='flex flex-row items-center gap-1'>
                     <Avatar>
                         <AvatarImage src={message.user.avatar?.avatar_path ? `/storage/${message.user.avatar.avatar_path}` : `/storage/avatars/default.jpg`}
@@ -20,11 +20,11 @@ export function ListItem({
                     </h2>
                 </div>
 
-                <p className='break-all'>
+                <p className='whitespace-pre-wrap break-words '>
                     {message.text}
                 </p>
 
-                <div className='flex flex-row flex-wrap gap-2'>
+                <div className='flex flex-row flex-wrap gap-2 mt-1'>
                     {message.images.map((image: Image) => (
                         <Dialog key={image.id}>
                             <DialogTrigger asChild aria-label={`Open image ${image.id}`}>

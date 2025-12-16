@@ -35,8 +35,8 @@ export function NavMain({ items }: { items: Rooms[] }) {
                                 tooltip={{ children: roomName }}
                             >
                                 <Link href={`/rooms/${room.id}`} className='h-full w-full rounded-none'>
-                                    <div className='flex flex-col h-full w-full items-start space-y-1'>
-                                        <div className='flex flex-row items-center gap-1  '>
+                                    <div>
+                                        <div className='flex flex-row items-center gap-1'>
                                             <Avatar>
                                                 <AvatarImage src={avatarPath ? `/storage/${avatarPath}` : '/storage/avatars/default.jpg'}
                                                     alt={`${roomName}'s avatar`} />
@@ -46,31 +46,34 @@ export function NavMain({ items }: { items: Rooms[] }) {
                                         </div>
 
 
+                                        {lastText || lastMessage?.images ? <div className='flex flex-col '>
 
-                                        <div className='flex flex-col items-center '>
 
-                                            <h2 className='text-blue-500 font-semibold self-start'>{lastUser?.name}:</h2>
+                                            <div className='flex justify-between items-center'>
+                                                <h2 className='text-blue-500 font-semibold '>{lastUser?.name}:</h2>
 
-                                            <div className="flex items-center self-start gap-2 flex-wrap ">
-                                                <p className="truncate">
+                                                <p className='w-40 truncate'>
                                                     {lastText}
                                                 </p>
 
-
                                                 {lastMessage?.images && lastMessage?.images.length > 0 && (
-                                                    <div className="flex items-center">
-                                                        <Image size={16} className="inline-block " />
-                                                        <span className="text-gray-500 text-sm">
+                                                    <div className="flex items-center ml-2">
+                                                        <Image size={16} />
+                                                        <span className="text-gray-500 text-sm ml-1">
                                                             {lastMessage?.images.length}
                                                         </span>
                                                     </div>
                                                 )}
 
-
                                             </div>
 
-                                        </div>
-                                        <span className='text-gray-400 text-sm '>{new Date(lastMessage?.created_at).toLocaleString() === 'Invalid Date' ? '' : new Date(lastMessage?.created_at).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) || ''}</span>
+                                            <span className='text-gray-400 text-sm '>{new Date(lastMessage?.created_at).toLocaleString() === 'Invalid Date' ? '' : new Date(lastMessage?.created_at).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) || ''}</span>
+
+
+                                        </div> : <span className='text-gray-700 dark:text-gray-300'>
+                                            No messages yet</span>}
+
+
                                     </div>
                                 </Link>
                             </SidebarMenuButton>

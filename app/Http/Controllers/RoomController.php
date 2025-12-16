@@ -12,25 +12,26 @@ use Inertia\Inertia;
 
 class RoomController extends Controller
 {
-    public function store(RoomRequest $request, CreateRoom $createRoom, Room $room)
+    public function store(RoomRequest $request, CreateRoom $createRoom)
     {
-        if (! $request->user()->can('create', $room)) {
-            abort(403, 'Unauthorized action.');
-        }
 
+        /** @var \App\Models\User $user */
+        /** @var \App\Models\User $authUser */
+        /** @var string $name */
+        /** @var array $data */
         $user = User::where('name', '=', $request->name)->first();
+
         $authUser = Auth::user();
         $name = $request->name;
-        $text = $request->text;
-
         $data = [
             'authUser' => $authUser,
             'user' => $user,
             'name' => $name,
-            'text' => $text,
         ];
 
         $room = $createRoom->execute($data);
+
+        return response()->json(['room' => $room], 200);
 
     }
 
@@ -45,14 +46,16 @@ class RoomController extends Controller
         $user = Auth::user();
         $user->load('avatar');
 
+        $room->load([
+            'users',
+            'messages',
+            'messages.user.avatar',
+            'messages.images',
+        ]);
+
         return Inertia::render('rooms/show', [
-            'room' => $room->load([
-                'users',
-                'messages',
-                'messages.user.avatar',
-                'messages.images',
-            ]),
-            // ...existing code...
+            'room' => $room,
+            'user' => $user,
         ]);
     }
 }

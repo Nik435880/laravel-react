@@ -7,7 +7,6 @@ use App\Models\User;
 
 class RoomPolicy
 {
-
     /**
      * Determine whether the user can view the model.
      */
@@ -16,10 +15,10 @@ class RoomPolicy
         return $room->users()->where('user_id', $user->id)->exists();
     }
 
-    public function create(User $user) 
+    public function create(User $user, Room $room): bool
     {
         return true;
-    
+
     }
 
     public function update(User $user, Room $room): bool
@@ -31,7 +30,4 @@ class RoomPolicy
     {
         return false;
     }
-
-
-
 }
