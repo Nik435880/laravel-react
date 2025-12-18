@@ -15,6 +15,7 @@ export const MessageForm = ({ room }: { room: Room }) => {
             encType="multipart/form-data"
             resetOnSuccess
         >
+            <Label htmlFor="text" className="sr-only">Message</Label>
             <Input
                 type="text"
                 name="text"
@@ -22,7 +23,7 @@ export const MessageForm = ({ room }: { room: Room }) => {
                 placeholder="Enter message..."
                 autoComplete="off"
             />
-            <Label htmlFor="images" className="flex items-center justify-center ">
+            <Label htmlFor="images" className="flex items-center justify-center">
                 <FileImage size={32} />
             </Label>
             <Input

@@ -23,11 +23,10 @@ export interface NavItem {
 }
 
 
-
 export interface Room {
     id: number,
     name: string,
-    messages: Messages[],
+    messages: Message[],
     users:User[]
 }
 
@@ -42,7 +41,7 @@ export interface SharedData {
     rooms: {
         id: number,
         name: string,
-        messages: Messages[],
+        messages: Message[],
         users: {
             id: number,
             name: string,
