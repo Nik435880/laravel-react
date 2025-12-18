@@ -6,6 +6,7 @@ import {
     DialogDescription,
     DialogHeader,
 } from '@/components/ui/dialog';
+import { MessageImage } from '@/components/message-image';
 import { Message, Image } from '@/types';
 
 export function MessageImages({ message }: { message: Message }) {
@@ -13,10 +14,9 @@ export function MessageImages({ message }: { message: Message }) {
         <div className="flex flex-row flex-wrap gap-2 mt-1">
             {message.images.map((image: Image) => (
                 <Dialog key={image.id}>
-                    <DialogTrigger asChild>
-                        <img
-                            src={`/storage/${image.image_path}`}
-                            alt={`Thumbnail ${image.id}`}
+                    <DialogTrigger>
+                        <MessageImage
+                            image={image}
                             className="w-48 h-48 object-cover rounded-md cursor-pointer hover:opacity-75"
                         />
                     </DialogTrigger>
@@ -31,9 +31,9 @@ export function MessageImages({ message }: { message: Message }) {
                                 Full view of image {image.id}
                             </DialogDescription>
                         </DialogHeader>
-                        <img
-                            src={`/storage/${image.image_path}`}
-                            alt={`Image ${image.id}`}
+
+                        <MessageImage
+                            image={image}
                             className="rounded-md max-w-full max-h-full object-contain object-center"
                             id={`image-${image.id}`}
                         />
