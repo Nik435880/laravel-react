@@ -61,10 +61,12 @@ function DialogContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
-          <XIcon />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
+        {/* Ensure a Description node exists to satisfy Radix's runtime check
+            (avoids "Missing `Description` or aria-describedby={undefined}" warnings)
+            We render a hidden Description as a fallback; if the consumer already
+            provides one, Radix will handle multiple descriptions gracefully. */}
+        <DialogPrimitive.Description className="sr-only" />
+
       </DialogPrimitive.Content>
     </DialogPortal>
   )

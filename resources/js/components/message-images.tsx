@@ -3,18 +3,17 @@ import {
     DialogTrigger,
     DialogContent,
     DialogTitle,
-} from '@radix-ui/react-dialog';
-import { DialogClose } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+    DialogDescription,
+    DialogHeader,
+} from '@/components/ui/dialog';
 import { Message, Image } from '@/types';
-
 
 export function MessageImages({ message }: { message: Message }) {
     return (
         <div className="flex flex-row flex-wrap gap-2 mt-1">
             {message.images.map((image: Image) => (
                 <Dialog key={image.id}>
-                    <DialogTrigger asChild aria-label={`Open image ${image.id}`}>
+                    <DialogTrigger asChild>
                         <img
                             src={`/storage/${image.image_path}`}
                             alt={`Thumbnail ${image.id}`}
@@ -23,27 +22,26 @@ export function MessageImages({ message }: { message: Message }) {
                     </DialogTrigger>
 
                     <DialogContent
-                        className="fixed inset-0 p-4 flex items-center justify-center z-50"
-                        aria-describedby={undefined}
+                        className='flex flex-col items-center p-0 m-0 justify-center bg-transparent shadow-none overflow-hidden border-none focus:ring-0 focus:ring-offset-0 focus:outline-none pointer-events-none '
+
                     >
-                        <div className="absolute inset-0 bg-black opacity-75" />
+                        <DialogHeader>
+                            <DialogTitle className="sr-only">Image {image.id}</DialogTitle>
+                            <DialogDescription id={`image-desc-${image.id}`} className="sr-only">
+                                Full view of image {image.id}
+                            </DialogDescription>
+                        </DialogHeader>
+                        <img
+                            src={`/storage/${image.image_path}`}
+                            alt={`Image ${image.id}`}
+                            className="rounded-md max-w-full max-h-full object-contain object-center"
+                            id={`image-${image.id}`}
 
-                        <div className="relative z-10 w-full h-full max-w-4xl max-h-[90vh] p-4 flex flex-col gap-4 items-center justify-center rounded-md">
-                            <DialogTitle />
+                        />
 
-                            <img
-                                src={`/storage/${image.image_path}`}
-                                alt={`Image ${image.id}`}
-                                className="rounded-md max-w-full max-h-full object-contain object-center"
-                            />
-
-                            <DialogClose asChild>
-                                <Button type="button" variant="default" className="">
-                                    Close
-                                </Button>
-                            </DialogClose>
-                        </div>
                     </DialogContent>
+
+
                 </Dialog>
             ))}
         </div>
