@@ -1,17 +1,15 @@
 import { useState, useEffect, useRef } from "react"
+import { usePage } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { FileImage } from 'lucide-react';
 import { SendHorizontal } from 'lucide-react';
 import { useEchoPresence } from "@laravel/echo-react";
 import { Form } from '@inertiajs/react';
-import { Room, Messages } from '@/types';
+import { Room, Messages, User } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { MessageList } from '@/components/ui/message-list';
-
-
-
 
 export default function Show({
     room
@@ -21,6 +19,8 @@ export default function Show({
 
     const [messages, setMessages] = useState<Messages[]>(room?.messages ?? []);
     const messageRef = useRef<HTMLUListElement | null>(null);
+    const { user } = usePage().props.auth as { user: User };
+
 
     const handleScroll = () => {
         if (messageRef.current) {
@@ -28,9 +28,11 @@ export default function Show({
         }
     };
 
+
+
     useEffect(() => {
         handleScroll();
-    }, [])
+    }, []);
 
 
     useEchoPresence(`room.${room?.id ?? ''}`, 'MessageSent', (e: { message: Messages }) => {

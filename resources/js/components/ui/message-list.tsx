@@ -1,5 +1,5 @@
 import { ListItem } from '@/components/ui/list-item';
-import { Room, Messages } from '@/types';
+import { Messages } from '@/types';
 import React from 'react';
 
 

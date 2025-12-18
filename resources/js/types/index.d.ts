@@ -25,7 +25,7 @@ export interface NavItem {
 export interface Rooms {
     id: number;
     name: string;
-    messages: { text: string, id: number, created_at: string, user: { name: string, avatar: { avatar_path: string } }, images: { image_path: string, id: number }[] }[],
+    messages: Messages[],
     users: {
         id: number;
         name: string;
@@ -39,10 +39,7 @@ export interface Rooms {
 export interface Room {
     id: number,
     name: string,
-    messages: {
-        text: string, id: number, created_at: string, user: { name: string, avatar: { avatar_path: string } },
-        images: { image_path: string, id: number }[]
-    }[],
+    messages: Messages[],
     users: { id: number, name: string, avatar: { avatar_path: string } }[]
 }
 
@@ -54,11 +51,10 @@ export interface SharedData {
     ziggy: Config & { location: string };
     errors: Record<string, string>;
     sidebarOpen: boolean;
-    [key: string]: unknown;
     rooms: {
         id: number,
         name: string,
-        messages: { text: string, id: number, created_at: string, user: { name: string, avatar: { avatar_path: string } }, images: { image_path: string, id: number }[] }[],
+        messages: Messages[],
         users: {
             id: number,
             name: string,
@@ -81,7 +77,6 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
 }
 
 export interface Image {
@@ -110,6 +105,7 @@ export interface Messages {
     text: string,
     created_at: string,
     user: {
+        id: number,
         name: string,
         avatar: {
             avatar_path: string
