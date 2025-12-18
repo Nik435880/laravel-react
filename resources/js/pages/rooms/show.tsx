@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import AppLayout from '@/layouts/app-layout';
-import { ListItem } from '@/components/ui/list-item';
 import { FileImage } from 'lucide-react';
 import { SendHorizontal } from 'lucide-react';
 import { useEchoPresence } from "@laravel/echo-react";
@@ -9,6 +8,10 @@ import { Room, Messages } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { MessageList } from '@/components/ui/message-list';
+
+
+
 
 export default function Show({
     room
@@ -16,8 +19,8 @@ export default function Show({
     room: Room
 }) {
 
-    const [messages, setMessages] = useState<Messages[]>(room.messages);
-    const messageRef = React.useRef<HTMLUListElement>(null);
+    const [messages, setMessages] = useState<Messages[]>(room?.messages ?? []);
+    const messageRef = useRef<HTMLUListElement | null>(null);
 
     const handleScroll = () => {
         if (messageRef.current) {
@@ -27,35 +30,22 @@ export default function Show({
 
     useEffect(() => {
         handleScroll();
-    }, []);
+    }, [])
 
 
-    useEchoPresence(`room.${room.id}`, 'MessageSent', (e: { id: number, message: { text: string, id: number, created_at: string, user: { name: string, avatar: { avatar_path: string } }, images: { image_path: string, id: number }[] } }) => {
+    useEchoPresence(`room.${room?.id ?? ''}`, 'MessageSent', (e: { message: Messages }) => {
         if (e.message.id > messages[messages.length - 1]?.id) {
             setMessages((messages): Messages[] => [...messages, e.message]);
+
         }
     });
 
     return (
         <AppLayout>
             <div>
-                <div>
-                    <ul className="overflow-y-auto scrollbar h-[calc(100vh-130px)] flex flex-col"
-                        ref={messageRef}>
-                        {messages.map((message: {
-                            text: string;
-                            id: number;
-                            created_at: string;
-                            user: { name: string; avatar: { avatar_path: string } };
-                            images: { image_path: string; id: number }[];
-                        }) => (
-                            <ListItem message={message} key={message.id} />
-                        ))}
-                    </ul>
+                <MessageList messages={messages} messageRef={messageRef} />
 
-
-                </div>
-                <Form method='POST' className='flex items-center gap-1 p-2 border-t dark:border-sidebar-border h-16' action={`/rooms/${room.id}`} encType="multipart/form-data" resetOnSuccess >
+                <Form method='POST' className='flex items-center justify-between gap-1 p-2 border-t dark:border-sidebar-border h-16' action={room?.id ? `/rooms/${room.id}` : '#'} encType="multipart/form-data" resetOnSuccess >
 
                     <Input type="text" name='text' id='text' placeholder='Enter message...' autoComplete='off'
                     />
@@ -70,8 +60,8 @@ export default function Show({
                         multiple // Allow multiple file selection
 
                     />
-                    <Button type='submit' className='rounded-full '>
-                        <SendHorizontal className="size-full" />
+                    <Button type='submit' className='rounded-full size-9' disabled={!room?.id}>
+                        <SendHorizontal size={32} />
                     </Button>
 
                 </Form>

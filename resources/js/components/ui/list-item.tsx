@@ -28,7 +28,7 @@ export function ListItem({
                     {message.images.map((image: Image) => (
                         <Dialog key={image.id}>
                             <DialogTrigger asChild aria-label={`Open image ${image.id}`}>
-                                <img src={`/storage/${image.image_path}`} alt={`Thumbnail ${image.id}`} className="w-48 h-48 object-cover rounded-md cursor-pointer" />
+                                <img src={`/storage/${image.image_path}`} alt={`Thumbnail ${image.id}`} className="w-48 h-48 object-cover rounded-md cursor-pointer hover:opacity-75" />
                             </DialogTrigger>
 
                             <DialogContent
@@ -45,7 +45,7 @@ export function ListItem({
                                     <img
                                         src={`/storage/${image.image_path}`}
                                         alt={`Image ${image.id}`}
-                                        className="rounded-md max-w-full max-h-full object-contain"
+                                        className="rounded-md max-w-full max-h-full object-contain object-center"
                                     />
 
                                     <DialogClose asChild>

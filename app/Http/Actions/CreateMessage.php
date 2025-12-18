@@ -16,11 +16,11 @@ final class CreateMessage
 
     public function execute(array $data): Message
     {
-
+        /** @var \App\Models\Message $message */
         $message = $this->message->create([
-            'room_id' => $data['room_id'],
+            'text' => $data['text'] ?? null,
             'user_id' => $data['user_id'],
-            'text' => $data['text'],
+            'room_id' => $data['room_id'],
         ]);
 
         if (! empty($data['images'])) {

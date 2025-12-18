@@ -14,13 +14,10 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->text('text')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('room_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id');
+            $table->foreignId('room_id');
             $table->timestamps();
         });
 
-    
     }
-
-   
 };
