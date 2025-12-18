@@ -26,13 +26,7 @@ export interface Rooms {
     id: number;
     name: string;
     messages: Messages[],
-    users: {
-        id: number;
-        name: string;
-        avatar: {
-            avatar_path: string
-        }
-    }[],
+    users: User[]
 
 }
 
@@ -40,7 +34,7 @@ export interface Room {
     id: number,
     name: string,
     messages: Messages[],
-    users: { id: number, name: string, avatar: { avatar_path: string } }[]
+    users:User[]
 }
 
 
@@ -85,22 +79,7 @@ export interface Image {
 }
 
 export interface Message {
-    user: {
-        name: string,
-        avatar: {
-            avatar_path: string,
-        }
-    }
-    text: string,
-    images: {
-        image_path: string,
-        id: number
-    }[]
-    created_at: string
 
-}
-
-export interface Messages {
     id: number,
     text: string,
     created_at: string,
@@ -115,7 +94,6 @@ export interface Messages {
         id: number,
         image_path: string,
     }[]
-
 }
 
 
