@@ -21,13 +21,13 @@ export function MessageImages({ message }: { message: Message }) {
                         />
                     </DialogTrigger>
 
-                    <DialogContent
-                        className='flex flex-col items-center p-0 m-0 justify-center bg-transparent shadow-none overflow-hidden border-none focus:ring-0 focus:ring-offset-0 focus:outline-none pointer-events-none '
-
-                    >
+                    <DialogContent className="flex flex-col items-center p-0 m-0 justify-center bg-transparent shadow-none overflow-hidden border-none focus:ring-0 focus:ring-offset-0 focus:outline-none pointer-events-none ">
                         <DialogHeader>
                             <DialogTitle className="sr-only">Image {image.id}</DialogTitle>
-                            <DialogDescription id={`image-desc-${image.id}`} className="sr-only">
+                            <DialogDescription
+                                id={`image-desc-${image.id}`}
+                                className="sr-only"
+                            >
                                 Full view of image {image.id}
                             </DialogDescription>
                         </DialogHeader>
@@ -36,12 +36,8 @@ export function MessageImages({ message }: { message: Message }) {
                             alt={`Image ${image.id}`}
                             className="rounded-md max-w-full max-h-full object-contain object-center"
                             id={`image-${image.id}`}
-
                         />
-
                     </DialogContent>
-
-
                 </Dialog>
             ))}
         </div>

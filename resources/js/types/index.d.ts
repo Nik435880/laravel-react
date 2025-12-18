@@ -22,13 +22,7 @@ export interface NavItem {
     isActive?: boolean;
 }
 
-export interface Rooms {
-    id: number;
-    name: string;
-    messages: Messages[],
-    users: User[]
 
-}
 
 export interface Room {
     id: number,

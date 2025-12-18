@@ -41,4 +41,4 @@ export const MessageForm = ({ room }: { room: Room }) => {
             </Button>
         </Form>
     );
-}
+};
