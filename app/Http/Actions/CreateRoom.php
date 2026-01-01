@@ -38,6 +38,7 @@ final class CreateRoom
         /** @var \App\Models\Room $room */
         $room = $this->room->create([
             'name' => $data['name'],
+            'image_path' => null,
         ]);
 
         // Attach users: if a target user exists attach both, otherwise attach only the auth user

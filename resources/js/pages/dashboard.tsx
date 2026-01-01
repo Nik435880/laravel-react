@@ -2,6 +2,8 @@ import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 import { User } from '@/types';
 import { UsersTable } from '@/components/users-table';
+import { Form } from '@inertiajs/react';
+
 
 export default function Dashboard({ users }: { users: User[] }) {
     return (
@@ -13,6 +15,9 @@ export default function Dashboard({ users }: { users: User[] }) {
                 </div>
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
+                        <Form action="/rooms" method="POST">
+                            <button type="submit">Create Room</button>
+                        </Form>
 
                     </div>
                 </div>

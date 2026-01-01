@@ -2,12 +2,12 @@ import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, Sideba
 import { Link, usePage } from '@inertiajs/react';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Image } from 'lucide-react';
-import { Rooms, Room } from '@/types';
+import { Room, SharedData } from '@/types';
 
-export function NavMain({ items }: { items: Rooms[] }) {
+export function NavMain({ items }: { items: Room[] }) {
 
 
-    const { auth, url } = usePage().props as unknown as { auth: { user: { name: string, id: number } }, url: string };
+    const { auth, url } = usePage<SharedData>().props;
 
 
     return (
@@ -16,32 +16,28 @@ export function NavMain({ items }: { items: Rooms[] }) {
             <SidebarMenu>
                 {items?.map((room: Room) => {
 
-
                     const lastMessage = room.messages[room.messages.length - 1] || null;
 
                     const lastUser = lastMessage?.user;
 
                     const lastText = lastMessage?.text;
 
-                    const roomName = room.users.find((user: { id: number; name: string; avatar: { avatar_path: string; }; }) => user.id !== auth.user.id)?.name;
-
-                    const avatarPath = room.users.find((user: { id: number; name: string; avatar: { avatar_path: string; }; }) => user.id !== auth.user.id)?.avatar?.avatar_path;
+                    const name = room.users.find((user) => user.id !== auth.user.id)?.name;
 
                     return (
                         <SidebarMenuItem key={room.id} >
                             <SidebarMenuButton
                                 asChild
                                 isActive={`/rooms/${room.id}` === url}
-                                tooltip={{ children: roomName }}
+                                tooltip={{ children: room.name }}
                             >
                                 <Link href={`/rooms/${room.id}`} className='h-full w-full rounded-none'>
                                     <div>
                                         <div className='flex flex-row items-center gap-1'>
                                             <Avatar>
-                                                <AvatarImage src={avatarPath ? `/storage/${avatarPath}` : '/storage/avatars/default.jpg'}
-                                                    alt={`${roomName}'s avatar`} />
+                                                <AvatarImage src={room.image_path} />
                                             </Avatar>
-                                            <h1 className='text-xl font-bold'>{roomName}</h1>
+                                            <h1 className='text-xl font-bold'>{room.name}</h1>
 
                                         </div>
 

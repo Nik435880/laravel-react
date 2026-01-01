@@ -26,8 +26,9 @@ export interface NavItem {
 export interface Room {
     id: number,
     name: string,
+    image_path: string,
     messages: Message[],
-    users:User[]
+    users: User[]
 }
 
 
@@ -38,18 +39,18 @@ export interface SharedData {
     ziggy: Config & { location: string };
     errors: Record<string, string>;
     sidebarOpen: boolean;
-    rooms: {
-        id: number,
-        name: string,
-        messages: Message[],
-        users: {
-            id: number,
-            name: string,
-            avatar: {
-                avatar_path: string
-            }
-        }[],
-    }[]
+    rooms: Room[],
+    url:string,
+    [key: string]: {
+        name: string;
+        quote: { message: string; author: string };
+        auth: Auth;
+        ziggy: Config & { location: string };
+        errors: Record<string, string>;
+        sidebarOpen: boolean;
+        rooms: Room[],
+        url:string,
+    };
 
 }
 

@@ -14,16 +14,15 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('image_id')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('room_user',function (Blueprint $table){
+        Schema::create('room_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('room_id');
             $table->foreignId('user_id');
 
         });
     }
-
-  
 };

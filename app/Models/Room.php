@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
-
 
 /**
  * @property int $id
@@ -15,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $messages_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\RoomFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room newQuery()
@@ -23,24 +23,26 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Room whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
-class Room extends Model 
+class Room extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
-    protected $table = "rooms";
-    
+    protected $table = 'rooms';
+
     protected $fillable = [
-        "name"
+        'name',
     ];
 
-    public function messages(){
+    public function messages()
+    {
         return $this->hasMany(Message::class);
     }
 
     public function users()
-{
-    return $this->belongsToMany(User::class, 'room_user', 'room_id', 'user_id');
-}
+    {
+        return $this->belongsToMany(User::class, 'room_user', 'room_id', 'user_id');
+    }
 }

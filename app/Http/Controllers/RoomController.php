@@ -23,6 +23,7 @@ class RoomController extends Controller
         $user = User::where('name', '=', $request->name)->first();
         $authUser = Auth::user();
         $name = $request->name;
+
         $data = [
             'authUser' => $authUser,
             'user' => $user,
