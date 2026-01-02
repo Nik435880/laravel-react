@@ -57,4 +57,6 @@ class RoomController extends Controller
             'user' => $user,
         ]);
     }
+
+    public function update() {}
 }

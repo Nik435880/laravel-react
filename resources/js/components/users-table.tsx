@@ -1,7 +1,6 @@
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -10,8 +9,6 @@ import {
 import { RoomForm } from '@/components/room-form';
 import { User } from '@/types';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Tab } from '@headlessui/react';
-
 
 export function UsersTable({ users }: { users: User[] }) {
     return (

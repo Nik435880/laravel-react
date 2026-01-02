@@ -40,7 +40,7 @@ export interface SharedData {
     errors: Record<string, string>;
     sidebarOpen: boolean;
     rooms: Room[],
-    url:string,
+    url: string,
     [key: string]: {
         name: string;
         quote: { message: string; author: string };
@@ -49,7 +49,7 @@ export interface SharedData {
         errors: Record<string, string>;
         sidebarOpen: boolean;
         rooms: Room[],
-        url:string,
+        url: string,
     };
 
 }
@@ -73,22 +73,12 @@ export interface Image {
 }
 
 export interface Message {
-
-    id: number,
-    text: string,
-    created_at: string,
-    user: {
-        id: number,
-        name: string,
-        avatar: {
-            avatar_path: string
-        }
-    }
-    images: {
-        id: number,
-        image_path: string,
-    }[]
+    id: number;
+    text: string;
+    user: User;
+    created_at: string;
+    updated_at: string;
+    images: Image[]
 }
-
 
 

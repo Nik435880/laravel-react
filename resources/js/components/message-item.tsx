@@ -1,22 +1,17 @@
 import { Message } from '@/types';
 import { MessageImages } from '@/components/message-images';
-import { MessageUser } from '@/components/message-user';
-
+import { UserInfo } from "@/components/user-info";
 
 export function MessageItem({ message }: { message: Message }) {
     return (
-        <li className="border-b last:border-b-0">
-            <div className="p-4">
-                <MessageUser message={message} />
+        <li className="p-2">
+            <UserInfo user={message.user} />
+            <p className="break-all">{message.text}</p>
+            <MessageImages message={message} />
+            <p className="text-gray-500 text-sm">
+                {new Date(message.created_at).toLocaleString()}
+            </p>
 
-                <p className="whitespace-pre-wrap break-words ">{message.text}</p>
-
-                <MessageImages message={message} />
-
-                <p className="text-gray-500 text-sm ">
-                    {new Date(message.created_at).toLocaleString()}
-                </p>
-            </div>
         </li>
     );
 }
