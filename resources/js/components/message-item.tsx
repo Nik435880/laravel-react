@@ -6,7 +6,7 @@ export function MessageItem({ message }: { message: Message }) {
     return (
         <li className="p-2">
             <UserInfo user={message.user} />
-            <p className="break-all">{message.text}</p>
+            <p className="break-words">{message.text}</p>
             <MessageImages message={message} />
             <p className="text-gray-500 text-sm">
                 {new Date(message.created_at).toLocaleString()}
