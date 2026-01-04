@@ -32,6 +32,8 @@ class RoomController extends Controller
 
         $room = $createRoom->execute($data);
 
+        return to_route('rooms.show', $room);
+
     }
 
     public function show(Request $request, Room $room)

@@ -40,5 +40,7 @@ class MessageController extends Controller
 
         $message = $createMessage->execute($data);
 
+        return to_route('rooms.show', $room);
+
     }
 }

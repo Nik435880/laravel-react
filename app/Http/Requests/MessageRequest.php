@@ -22,7 +22,7 @@ class MessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => 'nullable|string',
+            'text' => 'nullable|string|max:255|min:1|',
             'images.*' => 'nullable|min:1|file|image|max:2048|',
         ];
     }

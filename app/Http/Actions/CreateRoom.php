@@ -21,7 +21,7 @@ final class CreateRoom
         $existing = $this->room
             ->whereHas('users', function ($q) use ($ids) {
                 $q->whereIn('users.id', $ids);
-            }, '=', count($ids))
+            }, '>=', count($ids))
             ->whereDoesntHave('users', function ($q) use ($ids) {
                 $q->whereNotIn('users.id', $ids);
             })
@@ -34,12 +34,9 @@ final class CreateRoom
         /** @var \App\Models\Room $room */
         $room = $this->room->create([
             'name' => $data['name'],
-            'image_path' => null,
         ]);
 
         $room->users()->attach($ids);
-
-        $room->users()->attach($authUser->id);
 
         broadcast(new RoomCreated($room))->toOthers();
 

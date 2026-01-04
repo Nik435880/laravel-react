@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Inspiring;
+use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
-use App\Models\Room;
-use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -39,19 +38,17 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
             ],
-            'rooms' => Auth::check() ? Room::whereHas('users', function ($query) {
+            'rooms' => Room::whereHas('users', function ($query) {
                 $query->where('user_id', Auth::id());
-            })->with(['users.avatar', 'messages.images','messages.user.avatar'])->get() : [], // Return an empty array if the user is not authenticated
-            'ziggy' => fn(): array => [
+            })->with(['users.avatar', 'messages.images', 'messages.user.avatar'])->get(),
+            'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],

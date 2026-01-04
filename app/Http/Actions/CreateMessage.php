@@ -14,9 +14,13 @@ final class CreateMessage
 
     ) {}
 
-    public function execute(array $data): Message
+    public function execute(array $data): ?Message
     {
-        /** @var \App\Models\Message $message */
+
+        if (empty($data['text']) && empty($data['images'])) {
+            return null;
+        }
+
         $message = $this->message->create([
             'text' => $data['text'] ?? null,
             'user_id' => $data['user_id'],

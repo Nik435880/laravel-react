@@ -2,16 +2,10 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Rooms, type NavItem } from '@/types';
+import { Room, NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { LayoutGrid, MessageSquareText } from 'lucide-react';
 import AppLogo from './app-logo';
-
-
-
-
-
-
 
 export const mainNavItems: NavItem[] = [
     {
@@ -31,7 +25,7 @@ const footerNavItems: NavItem[] = [
 
 ];
 
-export function AppSidebar({ items }: { items: Rooms[] }) {
+export function AppSidebar({ items }: { items: Room[] }) {
 
     return (
         <Sidebar collapsible="offcanvas" variant="sidebar">
