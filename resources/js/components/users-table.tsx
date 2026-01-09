@@ -35,7 +35,7 @@ export function UsersTable({ users }: { users: User[] }) {
                                         alt={`${user.name}`}
                                     />
                                 </Avatar>
-                                <h2 className="font-bold text-blue-500">{user.name}</h2>
+                                <h2 className="font-bold text-blue-600 ">{user.name}</h2>
                             </div>
 
 

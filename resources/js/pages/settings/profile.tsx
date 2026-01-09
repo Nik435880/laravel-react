@@ -1,20 +1,14 @@
 import { type BreadcrumbItem, type SharedData } from '@/types';
-import { Transition } from '@headlessui/react';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
-
+import { Head, Link, usePage } from '@inertiajs/react';
+import { Form } from '@inertiajs/react';
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { type User } from '@/types';
-import { router } from '@inertiajs/react'
-
-
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,47 +17,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-type ProfileForm = {
-    name: string;
-    email: string;
-    avatar: File | null,
-}
-
-
-
-export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string, user: User }) {
+export default function Profile({
+    mustVerifyEmail,
+    status,
+}: {
+    mustVerifyEmail: boolean;
+    status?: string;
+    user: User;
+}) {
     const { auth } = usePage<SharedData>().props;
-
-    const { data, setData, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
-        name: auth.user.name,
-        email: auth.user.email,
-        avatar: null,
-    });
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('email', data.email);
-        if (data.avatar) {
-            formData.append('avatar', data.avatar);
-        }
-
-
-
-        router.post(route('profile.update'), {
-            _method: 'patch',
-            name: data.name,
-            email: data.email,
-            avatar: data.avatar
-        });
-
-        console.log(errors);
-        console.log(data);
-
-
-
-    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -71,23 +33,28 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Profile information" description="Update your name and email address" />
+                    <HeadingSmall
+                        title="Profile information"
+                        description="Update your name and email address"
+                    />
 
-                    <form onSubmit={submit} className="space-y-6">
+                    <Form
+                        action="/settings/profile"
+                        method="patch"
+                        encType="multipart/form-data"
+                        className="space-y-6"
+                    >
                         <div className="grid gap-2">
                             <Label htmlFor="name">Name</Label>
 
                             <Input
                                 id="name"
-                                type='text'
-                                name='name'
+                                type="text"
+                                name="name"
                                 className="mt-1 block w-full"
-                                value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
                                 placeholder="Full name"
+                                defaultValue={auth.user.name}
                             />
-
-                            <InputError className="mt-2" message={errors.name} />
                         </div>
 
                         <div className="grid gap-2">
@@ -96,15 +63,11 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <Input
                                 id="email"
                                 type="email"
-                                name='email'
+                                name="email"
                                 className="mt-1 block w-full"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
-
+                                defaultValue={auth.user.email}
                                 placeholder="Email address"
                             />
-
-                            <InputError className="mt-2" message={errors.email} />
                         </div>
 
                         <div className="grid gap-2">
@@ -112,18 +75,10 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                             <Input
                                 id="avatar"
-                                name='avatar'
-                                type='file'
+                                name="avatar"
+                                type="file"
                                 className="mt-1 block w-full"
-                                onChange={(e) => {
-                                    setData('avatar', e.target.files?.[0] || null);
-                                }}
-
-
-
                             />
-
-                            <InputError className="mt-2" message={errors.avatar} />
                         </div>
 
                         {mustVerifyEmail && auth.user.email_verified_at === null && (
@@ -149,19 +104,9 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         )}
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save</Button>
-
-                            <Transition
-                                show={recentlySuccessful}
-                                enter="transition ease-in-out"
-                                enterFrom="opacity-0"
-                                leave="transition ease-in-out"
-                                leaveTo="opacity-0"
-                            >
-                                <p className="text-sm text-neutral-600">Saved</p>
-                            </Transition>
+                            <Button>Save</Button>
                         </div>
-                    </form>
+                    </Form>
                 </div>
 
                 <DeleteUser />

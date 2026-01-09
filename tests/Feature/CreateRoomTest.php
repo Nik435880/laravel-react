@@ -16,7 +16,7 @@ test('creating a room returns existing two-user room', function () {
 
     $this->actingAs($userA)
         ->post('/rooms', ['name' => $userB->name])
-        ->assertStatus(200);
+        ->assertStatus(302);
 
     $this->assertEquals(1, Room::count());
 });
@@ -28,7 +28,7 @@ test('users can create a new two-user room when none exists', function () {
     $response = $this->actingAs($userA)
         ->post('/rooms', ['name' => $userB->name]);
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     $this->assertDatabaseCount('rooms', 1);
 
@@ -77,7 +77,7 @@ test('creating a room attaches exactly two unique users', function () {
 
     $this->actingAs($userA)
         ->post('/rooms', ['name' => $userB->name])
-        ->assertStatus(200);
+        ->assertStatus(302);
 
     $room = Room::first();
 

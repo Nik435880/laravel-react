@@ -2,7 +2,7 @@ import { AppContent } from '@/components/app-content';
 import { AppShell } from '@/components/app-shell';
 import { AppSidebar } from '@/components/app-sidebar';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
-import { Rooms, Room, type BreadcrumbItem } from '@/types';
+import { Room, type BreadcrumbItem } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { type SharedData } from '@/types';
 import { useState } from 'react';
@@ -14,18 +14,18 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
 
     const { rooms, auth } = usePage<SharedData>().props;
 
-    const [items, setItems] = useState<Rooms[]>(rooms);
+    const [items, setItems] = useState<Room[]>(rooms);
 
     useEcho('rooms', 'RoomCreated', (e: { room: Room }) => {
         if (e.room.users.find((user: { id: number; }) => user.id === auth.user.id)) {
-            setItems((items): Rooms[] => [...items, e.room]);
+            setItems((items): Room[] => [...items, e.room]);
         }
 
     });
 
     useEcho('rooms', 'RoomUpdated', (e: { room: Room }) => {
         if (e.room.users.find((user: { id: number; }) => user.id === auth.user.id)) {
-            setItems((items): Rooms[] => items.map((item: Room) => item.id === e.room.id ? e.room : item));
+            setItems((items): Room[] => items.map((item: Room) => item.id === e.room.id ? e.room : item));
         }
 
     });

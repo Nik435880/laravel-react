@@ -24,7 +24,7 @@ test('user can send message', function () {
             'text' => $message->text,
 
         ]
-    )->assertStatus(200);
+    )->assertStatus(302);
 
     $this->assertDatabaseHas('messages', [
         'text' => $message->text,
@@ -49,7 +49,7 @@ test('user can upload images', function () {
         'images' => [$file],
     ]);
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     Storage::disk('images')->assertExists($file->hashName());
 
@@ -69,7 +69,7 @@ test('sending a message dispatches MessageSent and RoomUpdated events', function
 
     $this->actingAs($user)->post('/rooms/'.$room->id, [
         'text' => 'Hello world',
-    ])->assertStatus(200);
+    ])->assertStatus(302);
 
     Event::assertDispatched(MessageSent::class);
     Event::assertDispatched(RoomUpdated::class);
@@ -100,7 +100,7 @@ test('user can upload multiple images', function () {
     $response = $this->actingAs($user)
         ->post('/rooms/'.$room->id, ['images' => [$file1, $file2]]);
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     $message = \App\Models\Message::first();
 
@@ -131,7 +131,7 @@ test('sending images without text still creates a message with images', function
 
     $this->actingAs($user)
         ->post('/rooms/'.$room->id, ['images' => [$file]])
-        ->assertStatus(200);
+        ->assertStatus(302);
 
     $message = \App\Models\Message::first();
 

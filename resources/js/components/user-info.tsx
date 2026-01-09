@@ -18,7 +18,7 @@ export function UserInfo({ user }: { user: User }) {
                 </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium text-md font-semibold text-blue-500">{user.name}</span>
+                <span className="truncate font-medium text-md font-semibold text-blue-600">{user.name}</span>
             </div>
         </div>
     );
