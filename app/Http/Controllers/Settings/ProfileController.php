@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Http\Actions\DeleteUser;
-use App\Http\Actions\UpdateUser;
+use App\Actions\DeleteUser;
+use App\Actions\UpdateUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;

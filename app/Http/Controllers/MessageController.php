@@ -2,43 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Actions\CreateMessage;
-use App\Http\Requests\MessageRequest;
+use App\Models\Room;
+use App\Actions\CreateMessage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\MessageRequest;
+
 
 class MessageController extends Controller
 {
-    public function store(MessageRequest $request, CreateMessage $createMessage)
+    public function store(MessageRequest $request, CreateMessage $createMessage, Room $room)
     {
 
-        /** @var int $user_id */
-        /** @var string $text */
-        /** @var array $images */
-        /** @var int $room_id */
-        /** @var \App\Models\Room $room */
-        /** @var \App\Models\User $authUser */
-        /** @var \App\Models\User $user */
-        /** @var array $data */
-        /** @var \App\Models\Message $message */
-        $user_id = Auth::id();
-        $roomParam = $request->route('room');
-        $room_id = is_object($roomParam) ? $roomParam->id : (int) $roomParam;
-        $room = Auth::user()->rooms()->find($room_id);
-        if (! $room) {
-            abort(404);
-        }
-        $room_id = $room->id;
         $text = $request->input('text');
         $images = $request->file('images', []);
 
-        $data = [
-            'user_id' => $user_id,
-            'room_id' => $room_id,
+        $attributes = [
             'text' => $text,
             'images' => $images,
+            'user_id' => Auth::id()
         ];
 
-        $message = $createMessage->execute($data);
+        $createMessage->execute($room, $attributes);
 
         return to_route('rooms.show', $room);
 

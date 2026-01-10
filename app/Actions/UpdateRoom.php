@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Actions;
+namespace App\Actions;
 
 use App\Events\RoomUpdated;
 use App\Models\Room;

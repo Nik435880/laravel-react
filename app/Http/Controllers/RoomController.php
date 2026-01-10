@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Actions\CreateRoom;
-use App\Http\Requests\RoomRequest;
+use App\Actions\CreateRoom;
 use App\Models\Room;
 use App\Models\User;
+use App\Http\Requests\RoomRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -15,22 +15,11 @@ class RoomController extends Controller
     public function store(RoomRequest $request, CreateRoom $createRoom)
     {
 
-        /** @var \App\Models\User $user */
-        /** @var \App\Models\User $authUser */
-        /** @var string $name */
-        /** @var array $data */
-        /** @var \App\Models\Room $room */
-        $user = User::where('name', '=', $request->name)->first();
-        $authUser = Auth::user();
-        $name = $request->name;
-
-        $data = [
-            'authUser' => $authUser,
-            'user' => $user,
-            'name' => $name,
+        $attributes = [
+            'name' => $request->name,
         ];
 
-        $room = $createRoom->execute($data);
+        $room = $createRoom->execute($attributes);
 
         return to_route('rooms.show', $room);
 
@@ -39,7 +28,7 @@ class RoomController extends Controller
     public function show(Request $request, Room $room)
     {
 
-        if (! $request->user()->can('view', $room)) {
+        if (!$request->user()->can('view', $room)) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -60,5 +49,5 @@ class RoomController extends Controller
         ]);
     }
 
-    public function update() {}
+
 }
