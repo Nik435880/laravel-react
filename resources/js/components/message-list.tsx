@@ -2,7 +2,6 @@ import { Message } from '@/types';
 import React from 'react';
 import { MessageItem } from '@/components/message-item';
 
-
 export const MessageList = ({
     messages,
     messageRef,
@@ -10,6 +9,7 @@ export const MessageList = ({
     messages: Message[];
     messageRef: React.RefObject<HTMLUListElement | null>;
 }) => {
+
     return (
         <ul ref={messageRef} className="overflow-y-auto h-[calc(100vh-130px)]">
             {messages?.map((message: Message) => (

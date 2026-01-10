@@ -3,7 +3,6 @@ import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { useRef } from 'react';
 import { Form } from '@inertiajs/react';
 import HeadingSmall from '@/components/heading-small';
 import { Button } from '@/components/ui/button';
@@ -21,10 +20,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 
 export default function Password() {
-    const passwordInput = useRef<HTMLInputElement>(null);
-    const currentPasswordInput = useRef<HTMLInputElement>(null);
-
-
 
     return (
         <AppLayout breadcrumbs={breadcrumbs} >
@@ -47,9 +42,7 @@ export default function Password() {
 
                                     <Input
                                         id="current_password"
-                                        ref={currentPasswordInput}
                                         name='current_password'
-
                                         type="password"
                                         className="mt-1 block w-full"
                                         autoComplete="current-password"
@@ -64,9 +57,7 @@ export default function Password() {
 
                                     <Input
                                         id="password"
-                                        ref={passwordInput}
                                         name="password"
-
                                         type="password"
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
