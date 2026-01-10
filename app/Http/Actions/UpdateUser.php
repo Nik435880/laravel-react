@@ -31,7 +31,7 @@ class UpdateUser
 
             $path = $data['avatar']->store('avatars', 'public') ?? null;
 
-            $user->avatar()->updateOrCreate([
+            $user->avatar()->update([
                 'avatar_path' => $path,
             ]);
         }
