@@ -3,14 +3,20 @@
 namespace App\Actions;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use App\Actions\UpdateUserAvatar;
 
 class UpdateUser
 {
-    public function execute(User $user, array $data): User
+    public function __construct(
+        private UpdateUserAvatar $updateUserAvatar,
+    ) {
+
+    }
+
+    public function execute(User $user, array $attributes): User
     {
 
-        if ($data['email'] !== $user->email) {
+        if ($attributes['email'] !== $user->email) {
             $user->email_verified_at = null;
         }
 
@@ -19,22 +25,13 @@ class UpdateUser
         } */
 
         $user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
             'email_verified_at' => $user->email_verified_at,
         ]);
 
-        if (isset($data['avatar'])) {
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar->avatar_path);
-            }
+        $this->updateUserAvatar->execute($user, $attributes);
 
-            $path = $data['avatar']->store('avatars', 'public') ?? null;
-
-            $user->avatar()->update([
-                'avatar_path' => $path,
-            ]);
-        }
 
         return $user;
 
