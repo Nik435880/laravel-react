@@ -21,17 +21,18 @@ final class CreateRoom
     public function execute(array $attributes): Room
     {
 
-        $room = DB::transaction(function () use ($attributes) {
-            $user = User::where('name', '=', $attributes['name'])->first();
+        $user = User::where('name', '=', $attributes['name'])->first();
 
-            $existingRoom = Room::whereHas('users', function ($query) use ($user) {
-                $query->where('user_id', '=', $user->id);
-            })->first();
+        $existingRoom = Room::whereHas('users', function ($query) use ($user) {
+            $query->where('user_id', '=', $user->id);
+        })->first();
+
+        if ($existingRoom) {
+            return $existingRoom;
+        }
 
 
-            if ($existingRoom) {
-                return $existingRoom;
-            }
+        $room = DB::transaction(function () use ($attributes, $user) {
 
             $room = Room::create($attributes);
 

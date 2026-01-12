@@ -1,7 +1,6 @@
 import { UserInfo } from '@/components/user-info';
 import { Message, User } from '@/types';
 import { Image } from 'lucide-react';
-import { useEffect } from 'react';
 
 export function NavLastMessage({
     message,
@@ -10,11 +9,6 @@ export function NavLastMessage({
     message: Message | null;
     user: User;
 }) {
-
-    useEffect(() => {
-        console.log(message);
-    });
-
 
 
 
