@@ -29,9 +29,8 @@ class RoomUpdated implements ShouldBroadcastNow
             'room' => [
                 'id' => $this->room->id,
                 'name' => $this->room->name,
-                'messages' => $this->room->messages->load('user.avatar', 'images'),
+                'messages' => $this->room->messages->load(['images', 'user.avatar']),
                 'users' => $this->room->users->load('avatar'),
-
             ],
 
         ];

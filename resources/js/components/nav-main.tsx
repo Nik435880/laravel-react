@@ -12,12 +12,15 @@ import { NavLastMessage } from './nav-last-message';
 export function NavMain({ items }: { items: Room[] }) {
     const { auth, url } = usePage<SharedData>().props;
 
+
+
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Chats</SidebarGroupLabel>
             <SidebarMenu>
                 {items?.map((room: Room) => {
                     const lastMessage = room.messages[room.messages.length - 1] || null;
+
 
                     const user =
                         room.users.find((user) => user.id !== auth.user.id) || auth.user;

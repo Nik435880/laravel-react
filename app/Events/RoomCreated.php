@@ -18,7 +18,8 @@ class RoomCreated implements ShouldBroadcastNow
      */
     public function __construct(
         protected Room $room,
-    ) {}
+    ) {
+    }
 
     public function broadcastWith()
     {
@@ -26,7 +27,7 @@ class RoomCreated implements ShouldBroadcastNow
             'room' => [
                 'id' => $this->room->id,
                 'name' => $this->room->name,
-                'messages' => $this->room->messages->load('user.avatar', 'images'),
+                'messages' => $this->room->messages->load(['images', 'user.avatar']),
                 'users' => $this->room->users->load('avatar'),
             ],
 

@@ -37,18 +37,21 @@ class Message extends Model
     protected $fillable = [
         "text",
         "user_id",
-        "room_id"
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
 
-    public function images(){
+    public function images()
+    {
         return $this->hasMany(Image::class);
     }
 
-    public function room(){
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function room()
+    {
         return $this->belongsTo(Room::class);
     }
 }

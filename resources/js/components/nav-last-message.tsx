@@ -1,6 +1,7 @@
 import { UserInfo } from '@/components/user-info';
 import { Message, User } from '@/types';
 import { Image } from 'lucide-react';
+import { useEffect } from 'react';
 
 export function NavLastMessage({
     message,
@@ -9,6 +10,14 @@ export function NavLastMessage({
     message: Message | null;
     user: User;
 }) {
+
+    useEffect(() => {
+        console.log(message);
+    });
+
+
+
+
     if (!message) {
         return (
             <div className="w-full flex flex-col">
@@ -22,7 +31,7 @@ export function NavLastMessage({
         <div className="w-full flex flex-col">
             <UserInfo user={user} />
             <div className="flex flex-col">
-                <span className="mt-1 text-sm font-semibold">{message.user.name}:</span>
+                <span className="mt-1 text-sm font-semibold">{message?.user?.name}:</span>
 
                 <div className="flex flex-row gap-1 justify-between ">
                     {message.text && (

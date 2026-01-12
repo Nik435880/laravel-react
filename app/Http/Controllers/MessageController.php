@@ -19,10 +19,9 @@ class MessageController extends Controller
         $attributes = [
             'text' => $text,
             'images' => $images,
-            'user_id' => Auth::id()
         ];
 
-        $createMessage->execute($room, $attributes);
+        $createMessage->execute(Auth::user(), $room, $attributes);
 
         return to_route('rooms.show', $room);
 

@@ -77,14 +77,16 @@ class User extends Authenticatable
     }
 
 
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
-    }
+
 
     public function avatar()
     {
         return $this->hasOne(Avatar::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     public function rooms()

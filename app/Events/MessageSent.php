@@ -21,26 +21,26 @@ class MessageSent implements ShouldBroadcastNow
     public function __construct($message)
     {
         $this->message = $message->load(['images', 'user.avatar']);
-       
+
     }
 
-  
+
     public function broadcastWith()
     {
         return [
             'message' => [
                 'id' => $this->message->id,
                 'text' => $this->message->text,
-                'user' => [
-                    'name' => $this->message->user->name,
-                    'avatar' => [
-                        'avatar_path' => $this->message->user->avatar?->avatar_path ?? 'default.jpg'
-                    ]
-                ],
                 'images' => $this->message->images->map(fn($image) => [
                     'id' => $image->id,
                     'image_path' => $image->image_path,
                 ])->toArray(),
+                'user' => [
+                    'id' => $this->message->user->id,
+                    'name' => $this->message->user->name,
+                    'email' => $this->message->user->email,
+                    'avatar' => $this->message->user->avatar,
+                ],
                 'created_at' => $this->message->created_at->toISOString(),
             ],
         ];

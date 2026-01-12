@@ -14,7 +14,7 @@ export function UserInfo({ user }: { user: User }) {
                 />
 
                 <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                    {getInitials(user.name)}
+                    {getInitials(user?.name)}
                 </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
