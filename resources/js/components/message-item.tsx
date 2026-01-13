@@ -1,11 +1,9 @@
 import { MessageImages } from '@/components/message-images';
 import { UserInfo } from "@/components/user-info";
-import { Message, SharedData } from '@/types';
-import { usePage } from "@inertiajs/react";
+import { Message } from '@/types';
 
 export function MessageItem({ message }: { message: Message }) {
 
-    const { auth } = usePage().props as unknown as SharedData;
 
     return (
         <li className="flex flex-col rounded-md p-2 text-wrap text-clip shadow-md w-full">
