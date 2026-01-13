@@ -10,7 +10,7 @@ export const MessageForm = ({ room }: { room: Room }) => {
     return (
         <Form
             method="POST"
-            className="flex items-center justify-between gap-1 p-2 border-t dark:border-sidebar-border h-16"
+            className="flex h-16 shrink-0 items-center gap-2 border-t-1 px-6 transition-[width,height] ease-linear "
             action={room?.id ? `/rooms/${room.id}` : '#'}
             encType="multipart/form-data"
             resetOnSuccess

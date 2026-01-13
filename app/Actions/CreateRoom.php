@@ -46,7 +46,6 @@ final class CreateRoom
 
         broadcast(new RoomCreated($room))->toOthers();
 
-
         return $room;
 
     }

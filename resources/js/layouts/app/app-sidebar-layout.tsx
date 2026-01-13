@@ -34,8 +34,10 @@ export default function AppSidebarLayout({ children }: { children: React.ReactNo
         <AppShell variant="sidebar">
             <AppSidebar items={items} />
             <AppContent variant="sidebar">
-                <AppSidebarHeader />
-                {children}
+                <div className='flex flex-col w-full h-[100vh]'>
+                    <AppSidebarHeader />
+                    {children}
+                </div>
             </AppContent>
         </AppShell>
     );
