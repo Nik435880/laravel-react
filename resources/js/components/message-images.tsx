@@ -12,7 +12,7 @@ import { Message, Image } from '@/types';
 export function MessageImages({ message }: { message: Message }) {
     return (
         <div className="flex flex-row flex-wrap gap-2 mt-1">
-            {message.images.map((image: Image) => (
+            {message?.images?.map((image: Image) => (
                 <Dialog key={image.id}>
                     <DialogTrigger>
                         <MessageImage

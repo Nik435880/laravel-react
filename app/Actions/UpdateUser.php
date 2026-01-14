@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\User;
 use App\Actions\UpdateUserAvatar;
+use Illuminate\Support\Facades\DB;
 
 class UpdateUser
 {
@@ -20,18 +21,23 @@ class UpdateUser
             $user->email_verified_at = null;
         }
 
+
+
         /* if ($user->isDirty('email')) {
          $user->email_verified_at = null;
         } */
 
-        $user->update([
-            'name' => $attributes['name'],
-            'email' => $attributes['email'],
-            'email_verified_at' => $user->email_verified_at,
-        ]);
+        DB::transaction(function () use ($user, $attributes) {
+            $user->update($attributes);
 
-        $this->updateUserAvatar->execute($user, $attributes);
+            $this->updateUserAvatar->execute($user, $attributes);
+        });
 
+        /*  $user->update([
+              'name' => $attributes['name'],
+              'email' => $attributes['email'],
+              'email_verified_at' => $user->email_verified_at,
+          ]); */
 
         return $user;
 

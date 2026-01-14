@@ -1,6 +1,7 @@
 import { UserInfo } from '@/components/user-info';
 import { Message, User } from '@/types';
 import { Image } from 'lucide-react';
+import { useEffect } from 'react';
 
 export function NavLastMessage({
     message,
@@ -9,6 +10,10 @@ export function NavLastMessage({
     message: Message | null;
     user: User;
 }) {
+
+    useEffect(() => {
+        console.log(message);
+    }, [message]);
 
 
 
@@ -31,11 +36,11 @@ export function NavLastMessage({
                     {message.text && (
                         <p className="truncate text-sm">{message.text}</p>
                     )}
-                    {message.images.length > 0 && (
-                        <span className="text-sm flex flex-row gap-1">
-                            {message.images.length} <Image size={16} />
-                        </span>
-                    )}
+
+                    <span className="text-sm flex flex-row gap-1">
+                        {message.images?.length} <Image size={16} />
+                    </span>
+
                 </div>
 
 

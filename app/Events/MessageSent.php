@@ -20,7 +20,7 @@ class MessageSent implements ShouldBroadcastNow
      */
     public function __construct($message)
     {
-        $this->message = $message->load(['images', 'user.avatar']);
+        $this->message = $message->load('user:id,name,email');
 
     }
 
@@ -31,10 +31,7 @@ class MessageSent implements ShouldBroadcastNow
             'message' => [
                 'id' => $this->message->id,
                 'text' => $this->message->text,
-                'images' => $this->message->images->map(fn($image) => [
-                    'id' => $image->id,
-                    'image_path' => $image->image_path,
-                ])->toArray(),
+                'images' => $this->message->images,
                 'user' => [
                     'id' => $this->message->user->id,
                     'name' => $this->message->user->name,
