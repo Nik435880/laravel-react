@@ -18,7 +18,7 @@ test('creating a room returns existing two-user room', function () {
         ->post('/rooms', ['name' => $userB->name])
         ->assertStatus(302);
 
-    $this->assertEquals(1, Room::count());
+    $this->assertEquals(1, Room::query()->count());
 });
 
 test('users can create a new two-user room when none exists', function () {
@@ -52,10 +52,9 @@ test('room creation broadcasts RoomCreated event', function () {
 
 test('name validation fails when too short', function () {
     $userA = User::factory()->create();
-    $userB = User::factory()->create();
 
     $this->actingAs($userA)
-        ->post('/rooms', ['name' => 'ab'])
+        ->post('/rooms', ['name' => 'a'])
         ->assertSessionHasErrors('name');
 });
 
@@ -67,7 +66,7 @@ test('non-member cannot view a room (403)', function () {
     $room->users()->attach($member->id);
 
     $this->actingAs($nonMember)
-        ->get('/rooms/'.$room->id)
+        ->get('/rooms/' . $room->id)
         ->assertStatus(403);
 });
 
