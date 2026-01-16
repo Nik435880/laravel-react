@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MessageItem } from '@/components/message-item';
 import { Message } from '@/types';
+import { usePage } from "@inertiajs/react"
+import { SharedData } from "@/types";
+
+
 
 
 export const MessageList = ({
@@ -10,12 +14,24 @@ export const MessageList = ({
     messages: Message[];
     messageRef: React.RefObject<HTMLUListElement | null>;
 }) => {
+    const { auth } = usePage().props as unknown as SharedData;
+
+    const userMessages = messages.filter((msg) => msg.user.id === auth.user.id);
+
+    useEffect(() => {
+        console.log(userMessages);
+
+    }, [userMessages]);
+
+
 
     return (
-        <ul ref={messageRef} className="flex flex-col w-full items-start overflow-y-auto overflow-x-hidden gap-2 p-2 transition-[width,height] ease-linear">
+        <ul ref={messageRef} className="overflow-y-auto overflow-x-hidden flex h-full flex-1 flex-col gap-2 md:gap-4 px-2 md:px-4 py-3 md:py-4">
             {messages?.map((message: Message) => (
-                <MessageItem key={message.id} message={message} />
+                <MessageItem key={message.id} message={message} currentUserId={auth.user.id} />
             ))}
         </ul>
     );
 };
+
+

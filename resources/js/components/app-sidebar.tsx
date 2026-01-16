@@ -28,7 +28,7 @@ const footerNavItems: NavItem[] = [
 export function AppSidebar({ items }: { items: Room[] }) {
 
     return (
-        <Sidebar collapsible="offcanvas" variant="sidebar" >
+        <Sidebar collapsible="offcanvas" variant="sidebar">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
