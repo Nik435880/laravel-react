@@ -6,7 +6,7 @@ use App\Models\Message;
 use App\Models\Room;
 use App\Models\User;
 
-final class UpdateRoomMessages
+final readonly class UpdateRoomMessages
 {
     public function __construct(
         private CreateMessage $createMessage,

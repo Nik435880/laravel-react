@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class UpdateUser
 {
     public function __construct(
-        private UpdateUserAvatar $updateUserAvatar,
+        private readonly UpdateUserAvatar $updateUserAvatar,
     ) {}
 
     /**

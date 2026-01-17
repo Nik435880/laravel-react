@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-final class CreateRoom
+final readonly class CreateRoom
 {
     public function __construct(
         private AddUser $addUser,

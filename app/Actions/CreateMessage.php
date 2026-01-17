@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-final class CreateMessage
+final readonly class CreateMessage
 {
     public function __construct(
         private SendImages $sendImages,
