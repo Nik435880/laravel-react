@@ -55,6 +55,6 @@ class RoomController extends Controller
 
         $updateRoomMessages->execute($request->validated(), $room, $request->user());
 
-        return to_route('rooms.show', $room->id);
+        return to_route('rooms.show', $room->id, 303);
     }
 }

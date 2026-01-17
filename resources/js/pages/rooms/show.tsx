@@ -20,7 +20,7 @@ export default function Show({ room }: { room: Room }) {
 
     useEffect(() => {
         scrollToBottom();
-    }, []);
+    }, [messages]);
 
     useEchoPresence(
         `room.${room?.id ?? ''}`,
