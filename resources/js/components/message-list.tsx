@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { MessageItem } from '@/components/message-item';
 import { Message } from '@/types';
 import { usePage } from "@inertiajs/react"
@@ -15,15 +15,6 @@ export const MessageList = ({
     messageRef: React.RefObject<HTMLUListElement | null>;
 }) => {
     const { auth } = usePage().props as unknown as SharedData;
-
-    const userMessages = messages.filter((msg) => msg.user.id === auth.user.id);
-
-    useEffect(() => {
-        console.log(userMessages);
-
-    }, [userMessages]);
-
-
 
     return (
         <ul ref={messageRef} className="overflow-y-auto overflow-x-hidden flex h-full flex-1 flex-col gap-2 md:gap-4 px-2 md:px-4 py-3 md:py-4">

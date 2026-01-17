@@ -6,7 +6,7 @@ export function MessageItem({ message, currentUserId }: { message: Message; curr
     const isCurrentUser = message.user.id === currentUserId;
 
     return (
-        <li className={`flex flex-col border-1 gap-2 p-2 md:p-3 rounded-lg w-full max-w-1/2 md:w-[600px] ${isCurrentUser
+        <li className={`flex flex-col border-1 gap-1 p-3 rounded-lg w-full max-w-1/2  ${isCurrentUser
             ? 'shadow-md shadow-gray-500 self-start'
             : 'shadow-md shadow-gray-500 self-end'
             }`}>
