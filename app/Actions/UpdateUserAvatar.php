@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Actions;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
-
 class UpdateUserAvatar
 {
-    public function execute(User $user, array $attributes)
+    /**
+     * @param  array<mixed>  $attributes
+     */
+    public function execute(User $user, array $attributes): void
     {
         if (isset($attributes['avatar'])) {
             if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar->avatar_path);
+                Storage::disk('public')->delete($user->avatar);
             }
 
             $path = $attributes['avatar']->store('avatars', 'public') ?? null;
@@ -22,5 +25,4 @@ class UpdateUserAvatar
         }
 
     }
-
 }

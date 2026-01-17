@@ -16,6 +16,9 @@ final class CreateMessage
         private SendImages $sendImages,
     ) {}
 
+    /**
+     * @param  array<Message>  $attributes
+     */
     public function execute(User $user, Room $room, array $attributes): ?Message
     {
 
@@ -26,6 +29,7 @@ final class CreateMessage
         $message = DB::transaction(function () use ($room, $user, $attributes): Message {
 
             $message = $room->messages()->create(Arr::only($attributes, 'text') + ['user_id' => $user->id]);
+            assert($message instanceof Message);
 
             $this->sendImages->execute($message, Arr::only($attributes, 'images'));
 
@@ -34,7 +38,7 @@ final class CreateMessage
         });
 
         broadcast(new MessageSent($message))->toOthers();
-        broadcast(new RoomUpdated($message->room))->toOthers();
+        broadcast(new RoomUpdated($room))->toOthers();
 
         return $message;
 

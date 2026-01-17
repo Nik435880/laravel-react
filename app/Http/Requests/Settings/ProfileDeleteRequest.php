@@ -6,6 +6,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProfileDeleteRequest extends FormRequest
 {
+    /**
+     * @return array<array<string>>
+     */
     public function rules(): array
     {
         return [

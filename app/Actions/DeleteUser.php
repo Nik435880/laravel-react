@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DeleteUser
 {
-    public function execute(User $user)
+    public function execute(User $user): void
     {
         Auth::logout();
 

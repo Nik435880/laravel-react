@@ -18,9 +18,11 @@ class RoomCreated implements ShouldBroadcastNow
      */
     public function __construct(
         protected Room $room,
-    ) {
-    }
+    ) {}
 
+    /**
+     * @return array<mixed>
+     */
     public function broadcastWith()
     {
         return [

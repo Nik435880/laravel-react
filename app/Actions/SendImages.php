@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Storage;
 
 class SendImages
 {
-    public function execute(Message $message, array $attributes)
+    /**
+     * @param  array<mixed>  $attributes
+     */
+    public function execute(Message $message, array $attributes): void
     {
         if (! isset($attributes['images']) || empty($attributes['images'])) {
             return;

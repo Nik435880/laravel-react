@@ -14,6 +14,9 @@ final class CreateRoom
         private AddUser $addUser,
     ) {}
 
+    /**
+     * @param  array<Room>  $attributes
+     */
     public function execute(array $attributes): Room
     {
         // Find the user by name

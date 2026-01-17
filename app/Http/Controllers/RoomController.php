@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class RoomController extends Controller
 {
@@ -28,7 +29,7 @@ class RoomController extends Controller
 
     }
 
-    public function show(Request $request, Room $room)
+    public function show(Request $request, Room $room): Response
     {
         $this->authorize('view', $room);
 
@@ -49,7 +50,7 @@ class RoomController extends Controller
         ]);
     }
 
-    public function update(MessageRequest $request, Room $room, UpdateRoomMessages $updateRoomMessages)
+    public function update(MessageRequest $request, Room $room, UpdateRoomMessages $updateRoomMessages): RedirectResponse
     {
         $this->authorize('update', $room);
 
