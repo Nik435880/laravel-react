@@ -23,7 +23,7 @@ final class CreateMessage
             return null;
         }
 
-        $message = DB::transaction(callback: function () use ($room, $user, $attributes): Message {
+        $message = DB::transaction(function () use ($room, $user, $attributes): Message {
 
             $message = $room->messages()->create(Arr::only($attributes, 'text') + ['user_id' => $user->id]);
 

@@ -17,7 +17,7 @@ export function MessageImages({ message }: { message: Message }) {
                     <DialogTrigger>
                         <MessageImage
                             image={image}
-                            className="w-48 h-48 object-cover rounded-md cursor-pointer hover:opacity-75"
+                            className="w-48 h-48 object-cover  cursor-pointer hover:opacity-75"
                         />
                     </DialogTrigger>
 

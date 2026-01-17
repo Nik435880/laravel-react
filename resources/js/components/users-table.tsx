@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table';
 import { RoomForm } from '@/components/room-form';
 import { User } from '@/types';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { UserInfo } from '@/components/user-info';
 
 export function UsersTable({ users }: { users: User[] }) {
     return (
@@ -24,21 +24,7 @@ export function UsersTable({ users }: { users: User[] }) {
                 {users.map((user) => (
                     <TableRow key={user.id}>
                         <TableCell>
-                            <div className="flex flex-row items-center gap-1">
-                                <Avatar>
-                                    <AvatarImage
-                                        src={
-                                            user.avatar?.avatar_path
-                                                ? `/storage/${user.avatar.avatar_path}`
-                                                : `/storage/avatars/default.jpg`
-                                        }
-                                        alt={`${user.name}`}
-                                    />
-                                </Avatar>
-                                <h2 className="font-bold text-blue-600 ">{user.name}</h2>
-                            </div>
-
-
+                            <UserInfo user={user} />
                         </TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>
