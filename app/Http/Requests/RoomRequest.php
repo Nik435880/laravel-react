@@ -11,7 +11,7 @@ class RoomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user() && $this->user()->can('create', \App\Models\Room::class);
     }
 
     /**
@@ -23,7 +23,6 @@ class RoomRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:3',
-
         ];
     }
 }

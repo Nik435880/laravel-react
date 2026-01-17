@@ -2,45 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
-use App\Models\User;
-use Inertia\Inertia;
 use App\Actions\CreateRoom;
-use Illuminate\Http\Request;
+use App\Actions\UpdateRoomMessages;
+use App\Http\Requests\MessageRequest;
 use App\Http\Requests\RoomRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Room;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class RoomController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Create a new room with the given name
-     *
-     * @param \App\Http\Requests\RoomRequest $request
-     * @param \App\Actions\CreateRoom $createRoom
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(RoomRequest $request, CreateRoom $createRoom): RedirectResponse
     {
+        $room = $createRoom->execute($request->validated());
 
-        $attributes = [
-            'name' => $request->name,
-        ];
-
-        $room = $createRoom->execute($attributes);
-
-        return to_route('rooms.show', $room);
+        return to_route('rooms.show', $room->id);
 
     }
 
     public function show(Request $request, Room $room)
     {
-
-        if (!$request->user()->can('view', $room)) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('view', $room);
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -50,7 +40,7 @@ class RoomController extends Controller
             'users',
             'messages',
             'messages.images',
-            'messages.user.avatar'
+            'messages.user.avatar',
         ]);
 
         return Inertia::render('rooms/show', [
@@ -59,5 +49,12 @@ class RoomController extends Controller
         ]);
     }
 
+    public function update(MessageRequest $request, Room $room, UpdateRoomMessages $updateRoomMessages)
+    {
+        $this->authorize('update', $room);
 
+        $updateRoomMessages->execute($request->validated(), $room, $request->user());
+
+        return to_route('rooms.show', $room->id);
+    }
 }

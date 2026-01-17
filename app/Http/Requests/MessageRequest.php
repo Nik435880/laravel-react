@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MessageRequest extends FormRequest
@@ -9,7 +11,7 @@ class MessageRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize(User $user, Message $message): bool
     {
         return true;
     }

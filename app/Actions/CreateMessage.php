@@ -2,23 +2,19 @@
 
 namespace App\Actions;
 
-use App\Models\User;
-use App\Models\Room;
-use App\Models\Message;
-use App\Actions\SendImages;
 use App\Events\MessageSent;
 use App\Events\RoomUpdated;
+use App\Models\Message;
+use App\Models\Room;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-
 
 final class CreateMessage
 {
     public function __construct(
         private SendImages $sendImages,
-    ) {
-
-    }
+    ) {}
 
     public function execute(User $user, Room $room, array $attributes): ?Message
     {

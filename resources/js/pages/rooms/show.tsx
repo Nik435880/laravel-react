@@ -5,6 +5,7 @@ import { Room, Message } from '@/types';
 import { MessageList } from '@/components/message-list';
 import { MessageForm } from '@/components/message-form';
 
+
 export default function Show({ room }: { room: Room }) {
     const [messages, setMessages] = useState<Message[]>(room?.messages ?? []);
     const messageRef = useRef<HTMLUListElement | null>(null);

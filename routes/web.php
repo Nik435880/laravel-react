@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,7 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
     Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
-    Route::post('/rooms/{room}', [MessageController::class, 'store'])->name('messages.store');
+    Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
 });
 
 require __DIR__.'/settings.php';

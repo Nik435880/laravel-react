@@ -18,7 +18,7 @@ test('user can send message', function () {
 
     $user->rooms()->attach($room);
 
-    $this->actingAs($user)->post(
+    $this->actingAs($user)->put(
         '/rooms/'.$room->id,
         [
             'text' => $message->text,
@@ -45,7 +45,7 @@ test('user can upload images', function () {
         'image_path' => 'images/'.$file->hashName(),
     ]);
 
-    $response = $this->actingAs($user)->post('/rooms/'.$room->id, [
+    $response = $this->actingAs($user)->put('/rooms/'.$room->id, [
         'images' => [$file],
     ]);
 
@@ -67,7 +67,7 @@ test('sending a message dispatches MessageSent and RoomUpdated events', function
 
     $user->rooms()->attach($room);
 
-    $this->actingAs($user)->post('/rooms/'.$room->id, [
+    $this->actingAs($user)->put('/rooms/'.$room->id, [
         'text' => 'Hello world',
     ])->assertStatus(302);
 
@@ -84,7 +84,7 @@ test('validation fails for non-image upload', function () {
     $file = UploadedFile::fake()->create('doc.pdf', 100, 'application/pdf');
 
     $this->actingAs($user)
-        ->post('/rooms/'.$room->id, ['images' => [$file]])
+        ->put('/rooms/'.$room->id, ['images' => [$file]])
         ->assertSessionHasErrors('images.0');
 });
 
@@ -98,7 +98,7 @@ test('user can upload multiple images', function () {
     $file2 = UploadedFile::fake()->image('two.jpg')->size(700);
 
     $response = $this->actingAs($user)
-        ->post('/rooms/'.$room->id, ['images' => [$file1, $file2]]);
+        ->put('/rooms/'.$room->id, ['images' => [$file1, $file2]]);
 
     $response->assertStatus(302);
 
@@ -117,7 +117,7 @@ test('oversized image is rejected', function () {
     $big = UploadedFile::fake()->image('big.jpg')->size(3000); // 3MB
 
     $this->actingAs($user)
-        ->post('/rooms/'.$room->id, ['images' => [$big]])
+        ->put('/rooms/'.$room->id, ['images' => [$big]])
         ->assertSessionHasErrors('images.0');
 });
 
@@ -130,7 +130,7 @@ test('sending images without text still creates a message with images', function
     $file = UploadedFile::fake()->image('pic.jpg')->size(400);
 
     $this->actingAs($user)
-        ->post('/rooms/'.$room->id, ['images' => [$file]])
+        ->put('/rooms/'.$room->id, ['images' => [$file]])
         ->assertStatus(302);
 
     $message = \App\Models\Message::first();
