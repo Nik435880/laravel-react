@@ -26,7 +26,7 @@ class RoomUpdated implements ShouldBroadcastNow
     /**
      * @return array<mixed>
      */
-    public function broadcastWith()
+    public function broadcastWith(): array
     {
         return [
             'room' => [

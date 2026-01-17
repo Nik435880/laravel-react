@@ -25,7 +25,7 @@ class MessageSent implements ShouldBroadcastNow
     /**
      * @return array<string, array<string, mixed>>
      */
-    public function broadcastWith()
+    public function broadcastWith(): array
     {
         return [
             'message' => [
