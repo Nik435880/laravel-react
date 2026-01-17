@@ -4,9 +4,6 @@ import { Message } from '@/types';
 import { usePage } from "@inertiajs/react"
 import { SharedData } from "@/types";
 
-
-
-
 export const MessageList = ({
     messages,
     messageRef,
