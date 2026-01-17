@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('user can send message', function () {
+test('user can send message', function (): void {
     $user = User::factory()->create();
     $room = Room::factory()->create();
     $message = Message::factory()->create();
@@ -31,7 +31,7 @@ test('user can send message', function () {
     ]);
 });
 
-test('user can upload images', function () {
+test('user can upload images', function (): void {
     $user = User::factory()->create();
     $room = Room::factory()->create();
     $message = Message::factory()->create();
@@ -59,7 +59,7 @@ test('user can upload images', function () {
 
 });
 
-test('sending a message dispatches MessageSent and RoomUpdated events', function () {
+test('sending a message dispatches MessageSent and RoomUpdated events', function (): void {
     Event::fake();
 
     $user = User::factory()->create();
@@ -75,7 +75,7 @@ test('sending a message dispatches MessageSent and RoomUpdated events', function
     Event::assertDispatched(RoomUpdated::class);
 });
 
-test('validation fails for non-image upload', function () {
+test('validation fails for non-image upload', function (): void {
     $user = User::factory()->create();
     $room = Room::factory()->create();
 
@@ -88,7 +88,7 @@ test('validation fails for non-image upload', function () {
         ->assertSessionHasErrors('images.0');
 });
 
-test('user can upload multiple images', function () {
+test('user can upload multiple images', function (): void {
     $user = User::factory()->create();
     $room = Room::factory()->create();
 
@@ -108,7 +108,7 @@ test('user can upload multiple images', function () {
     $this->assertEquals(2, $message->images()->count());
 });
 
-test('oversized image is rejected', function () {
+test('oversized image is rejected', function (): void {
     $user = User::factory()->create();
     $room = Room::factory()->create();
 
@@ -121,7 +121,7 @@ test('oversized image is rejected', function () {
         ->assertSessionHasErrors('images.0');
 });
 
-test('sending images without text still creates a message with images', function () {
+test('sending images without text still creates a message with images', function (): void {
     $user = User::factory()->create();
     $room = Room::factory()->create();
 

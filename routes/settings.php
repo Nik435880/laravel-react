@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function (): void {
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
 
         return Inertia::render('settings/appearance', [
             'user' => $user,
-            'rooms' => Room::whereHas('users', function ($query) use ($request) {
+            'rooms' => Room::whereHas('users', function ($query) use ($request): void {
                 $query->where('user_id', $request->user()->id);
             })->with(['users.avatar', 'messages.images', 'messages.user.avatar'])->get(),
         ]

@@ -25,7 +25,7 @@ class UpdateUser
          $user->email_verified_at = null;
         } */
 
-        DB::transaction(function () use ($user, $attributes) {
+        DB::transaction(function () use ($user, $attributes): void {
             $user->update($attributes);
 
             $this->updateUserAvatar->execute($user, $attributes);

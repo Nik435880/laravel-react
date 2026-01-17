@@ -9,7 +9,7 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
     Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');

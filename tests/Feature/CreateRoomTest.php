@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Event;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('creating a room returns existing two-user room', function () {
+test('creating a room returns existing two-user room', function (): void {
     $userA = User::factory()->create();
     $userB = User::factory()->create();
 
@@ -21,7 +21,7 @@ test('creating a room returns existing two-user room', function () {
     $this->assertEquals(1, Room::query()->count());
 });
 
-test('users can create a new two-user room when none exists', function () {
+test('users can create a new two-user room when none exists', function (): void {
     $userA = User::factory()->create();
     $userB = User::factory()->create();
 
@@ -38,7 +38,7 @@ test('users can create a new two-user room when none exists', function () {
     $this->assertDatabaseHas('room_user', ['room_id' => $room->id, 'user_id' => $userB->id]);
 });
 
-test('room creation broadcasts RoomCreated event', function () {
+test('room creation broadcasts RoomCreated event', function (): void {
     Event::fake();
 
     $userA = User::factory()->create();
@@ -50,7 +50,7 @@ test('room creation broadcasts RoomCreated event', function () {
     Event::assertDispatched(RoomCreated::class);
 });
 
-test('name validation fails when too short', function () {
+test('name validation fails when too short', function (): void {
     $userA = User::factory()->create();
 
     $this->actingAs($userA)
@@ -58,7 +58,7 @@ test('name validation fails when too short', function () {
         ->assertSessionHasErrors('name');
 });
 
-test('non-member cannot view a room (403)', function () {
+test('non-member cannot view a room (403)', function (): void {
     $member = User::factory()->create();
     $nonMember = User::factory()->create();
 
@@ -70,7 +70,7 @@ test('non-member cannot view a room (403)', function () {
         ->assertStatus(403);
 });
 
-test('creating a room attaches exactly two unique users', function () {
+test('creating a room attaches exactly two unique users', function (): void {
     $userA = User::factory()->create();
     $userB = User::factory()->create();
 

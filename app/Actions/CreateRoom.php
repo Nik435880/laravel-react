@@ -27,9 +27,9 @@ final class CreateRoom
         }
 
         // Check if a room already exists between the current user and the target user
-        $existingRoom = Room::whereHas('users', function ($query) use ($user) {
+        $existingRoom = Room::whereHas('users', function ($query) use ($user): void {
             $query->where('user_id', $user->id);
-        })->whereHas('users', function ($query) {
+        })->whereHas('users', function ($query): void {
             $query->where('user_id', Auth::id());
         })->first();
 

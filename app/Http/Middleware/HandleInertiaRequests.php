@@ -45,7 +45,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'rooms' => Room::whereHas('users', function ($query) {
+            'rooms' => Room::whereHas('users', function ($query): void {
                 $query->where('user_id', Auth::id());
             })->with(['users.avatar', 'messages.images', 'messages.user'])->get(),
             'ziggy' => fn(): array => [

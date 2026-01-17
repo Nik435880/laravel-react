@@ -4,7 +4,7 @@ use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('user can visit settings', function () {
+test('user can visit settings', function (): void {
     $user = User::factory()->create();
 
     $this->actingAs($user);
@@ -51,7 +51,7 @@ test('user can visit settings', function () {
 
 });
 
-test('user can update profile', function () {
+test('user can update profile', function (): void {
 
     $user = User::factory()->create(['name' => 'Original Name', 'email' => 'original@example.com']);
 
@@ -78,7 +78,7 @@ test('user can update profile', function () {
 
 });
 
-test('user can delete account', function () {
+test('user can delete account', function (): void {
 
     $user = User::factory()->create();
 
