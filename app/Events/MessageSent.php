@@ -32,7 +32,7 @@ class MessageSent implements ShouldBroadcastNow
                 'id' => $this->message->id,
                 'text' => $this->message->text,
                 'images' => $this->message->images,
-                'user' => $this->message->user,
+                'user' => $this->message->user->load('avatar'),
                 'created_at' => $this->message->created_at->toISOString(),
             ],
         ];

@@ -12,10 +12,8 @@ export function NavLastMessage({
 }) {
 
     useEffect(() => {
-        console.log(message);
-    }, [message]);
-
-
+        console.log('NavLastMessage rendered with message:', message);
+    }, [message, user]);
 
     if (!message) {
         return (
@@ -32,14 +30,17 @@ export function NavLastMessage({
             <div className="flex flex-col">
                 <span className="mt-1 text-sm font-semibold">{message?.user?.name}:</span>
 
-                <div className="flex flex-row gap-1 justify-between ">
+                <div className="flex flex-row gap-1 justify-between">
                     {message.text && (
                         <p className="truncate text-sm">{message.text}</p>
                     )}
 
-                    <span className="text-sm flex flex-row gap-1">
-                        {message.images?.length} <Image size={16} />
-                    </span>
+                    {message.images?.length > 0 && (
+                        <div className="flex items-center gap-1">
+                            <Image className="w-4 h-4 text-gray-500" />
+                            <span className="text-sm text-gray-500">Photo</span>
+                        </div>
+                    )}
 
                 </div>
 
