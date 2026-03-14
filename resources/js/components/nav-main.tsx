@@ -15,6 +15,17 @@ export function NavMain({ items }: { items: Room[] }) {
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Chats</SidebarGroupLabel>
+            <SidebarMenuItem>
+                <SidebarMenuButton
+                    asChild
+                    isActive={'/rooms/create' === url}
+                    tooltip={{ children: 'Create new room' }}
+                >
+                    <Link href="/rooms/create" className="h-full w-full">
+                        Create new room
+                    </Link>
+                </SidebarMenuButton>
+            </SidebarMenuItem>
             <SidebarMenu>
                 {items?.map((room: Room) => {
                     const lastMessage = room.messages[room.messages.length - 1] || null;
@@ -30,7 +41,7 @@ export function NavMain({ items }: { items: Room[] }) {
                                 tooltip={{ children: room.name }}
                             >
                                 <Link href={`/rooms/${room.id}`} className="h-full w-full">
-                                    <NavLastMessage message={lastMessage} user={user} />
+                                    <NavLastMessage message={lastMessage} user={user} room={room} />
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

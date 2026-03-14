@@ -9,7 +9,7 @@ class AddUser
 {
     public function execute(User $user, Room $room): void
     {
-        $room->users()->attach($user);
+        $room->users()->syncWithoutDetaching([$user->id]);
 
     }
 }

@@ -32,8 +32,10 @@ class RoomUpdated implements ShouldBroadcastNow
             'room' => [
                 'id' => $this->room->id,
                 'name' => $this->room->name,
+                'image_path' => $this->room->image_path,
                 'messages' => $this->room->messages()->with('images', 'user:id,name,email', 'user.avatar')->latest()->take(1)->get()->reverse()->values(),
                 'users' => $this->room->users()->with('avatar')->get(),
+
             ],
 
         ];

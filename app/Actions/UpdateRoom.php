@@ -7,12 +7,10 @@ use App\Models\Room;
 
 final class UpdateRoom
 {
-    public function execute(Room $room): Room
+    public function execute(array $attributes, Room $room): Room
     {
-        $room = $this->room->fresh();
-        broadcast(new RoomUpdated($room))->toOthers();
-
+        $room->messages()->create($attributes);
+        RoomUpdated::dispatch($room);
         return $room;
-
     }
 }

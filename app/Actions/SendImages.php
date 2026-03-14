@@ -16,9 +16,9 @@ class SendImages
             return;
         }
 
-        foreach ($attributes['images'] as $imagePath) {
-            $imagePath = Storage::disk('public')->put('images', $imagePath);
-            $images = $message->images()->create([
+        foreach ($attributes['images'] as $image) {
+            $imagePath = $image->store('images', 'public');
+            $message->images()->create([
                 'image_path' => $imagePath,
             ]);
 

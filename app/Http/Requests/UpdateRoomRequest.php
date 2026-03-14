@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Message;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MessageRequest extends FormRequest
+class UpdateRoomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(User $user, Message $message): bool
+    public function authorize(User $user, Room $room): bool
     {
         return true;
     }

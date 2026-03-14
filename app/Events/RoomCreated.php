@@ -29,8 +29,9 @@ class RoomCreated implements ShouldBroadcastNow
             'room' => [
                 'id' => $this->room->id,
                 'name' => $this->room->name,
-                'messages' => $this->room->messages->load(['images', 'user.avatar']),
+                'messages' => $this->room->messages->load(['images', 'user.avatar', 'room.image_path']),
                 'users' => $this->room->users->load('avatar'),
+                'image_path' => $this->room->image_path,
             ],
 
         ];

@@ -19,39 +19,63 @@ final readonly class CreateRoom
      */
     public function execute(array $attributes): Room
     {
-        // Find the user by name
-        $user = User::where('name', $attributes['name'])->first();
 
-        if (! $user) {
-            throw new \Exception("User with name '{$attributes['name']}' not found.");
-        }
+        return DB::transaction(function () use ($attributes) {
 
-        // Check if a room already exists between the current user and the target user
-        $existingRoom = Room::whereHas('users', function ($query) use ($user): void {
-            $query->where('user_id', $user->id);
-        })->whereHas('users', function ($query): void {
-            $query->where('user_id', Auth::id());
-        })->first();
+            /** @var User $user */
+            $user = Auth::user();
 
-        if ($existingRoom) {
-            return $existingRoom;
-        }
+            $otherUser = User::query()
+                ->where('name', $attributes['name'])
+                ->first();
 
-        $room = DB::transaction(function () use ($attributes, $user) {
+            if ($otherUser) {
+                $existingRoom = Room::query()
+                    ->where('name', $otherUser->name)
+                    ->whereHas('users', fn($q) => $q->whereKey($user->id))
+                    ->whereHas('users', fn($q) => $q->whereKey($otherUser->id))
+                    ->has('users', '=', 2)
+                    ->first();
 
-            $room = Room::create($attributes);
+                if ($existingRoom) {
+                    return $existingRoom;
+                }
+            }
 
-            $this->addUser->execute(Auth::user(), $room);
+            $imagePath = null;
+
+            if (isset($attributes['image']) && $attributes['image']) {
+                $imagePath = $attributes['image']->store('room_images', 'public');
+            }
+
+            if (isset($attributes['image_path']) && $attributes['image_path']) {
+                $imagePath = $attributes['image_path'];
+            }
+
+            $room = Room::create([
+                'name' => $otherUser?->name ?? $attributes['name'],
+                'image_path' => $imagePath,
+            ]);
+
 
             $this->addUser->execute($user, $room);
+            if ($otherUser) {
+                $this->addUser->execute($otherUser, $room);
+            }
+
+            if (isset($attributes['users'])) {
+                foreach ($attributes['users'] as $userId) {
+                    /** @var User $user */
+                    $user = User::find($userId);
+                    if ($user) {
+                        $this->addUser->execute($user, $room);
+                    }
+                }
+            }
+
+            RoomCreated::dispatch($room);
 
             return $room;
-
         });
-
-        broadcast(new RoomCreated($room))->toOthers();
-
-        return $room;
-
     }
 }

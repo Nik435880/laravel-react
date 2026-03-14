@@ -38,6 +38,7 @@ export function AppSidebar({ items }: { items: Room[] }) {
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
+
                 </SidebarMenu>
             </SidebarHeader>
 

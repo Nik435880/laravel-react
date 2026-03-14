@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('image_id')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
 
@@ -22,7 +22,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('room_id');
             $table->foreignId('user_id');
-
         });
     }
 };

@@ -8,8 +8,9 @@ export function RoomForm({ user }: { user: User }) {
         <Form
             action={store()}
             method="POST"
-            transform={(data) => ({ ...data, name: user.name })}
+            transform={(data) => ({ ...data, name: user.name, image_path: user.avatar?.avatar_path })}
         >
+
             <Button variant="outline">Send message</Button>
         </Form>
     );

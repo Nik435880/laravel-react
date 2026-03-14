@@ -19,7 +19,6 @@ class MessageSent implements ShouldBroadcastNow
     public function __construct(protected Message $message)
     {
         $this->message = $message->load('user:id,name,email');
-
     }
 
     /**
@@ -34,6 +33,7 @@ class MessageSent implements ShouldBroadcastNow
                 'images' => $this->message->images,
                 'user' => $this->message->user->load('avatar'),
                 'created_at' => $this->message->created_at->toISOString(),
+
             ],
         ];
     }
@@ -46,7 +46,7 @@ class MessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('room.'.$this->message->room_id), // Use the updated room property here
+            new PresenceChannel('room.' . $this->message->room_id), // Use the updated room property here
         ];
     }
 }

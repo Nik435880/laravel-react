@@ -3,6 +3,7 @@ import { User } from '@/types';
 import { UsersTable } from '@/components/users-table';
 
 
+
 export default function Dashboard({ users }: { users: User[] }) {
     return (
         <AppLayout>
@@ -10,8 +11,6 @@ export default function Dashboard({ users }: { users: User[] }) {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                     <UsersTable users={users} />
                 </div>
-
-
             </div>
         </AppLayout>
     );

@@ -7,8 +7,8 @@ export function MessageItem({ message, currentUserId }: { message: Message; curr
 
     return (
         <li className={`flex flex-col border-1 gap-1 p-3 rounded-lg w-full max-w-1/2  ${isCurrentUser
-            ? 'shadow-md shadow-gray-500 self-start'
-            : 'shadow-md shadow-gray-500 self-end'
+            ? ' self-start'
+            : ' self-end'
             }`}>
             <UserInfo user={message.user} />
             <p className="break-normal text-sm md:text-base">{message.text}</p>

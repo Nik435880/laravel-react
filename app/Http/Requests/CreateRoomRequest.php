@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Room;
 
-class RoomRequest extends FormRequest
+class CreateRoomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user() && $this->user()->can('create', \App\Models\Room::class);
+        return true;
     }
 
     /**
@@ -23,6 +24,8 @@ class RoomRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:3',
+            'image' => 'nullable|image|max:2048|file',
+
         ];
     }
 }

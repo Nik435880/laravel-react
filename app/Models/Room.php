@@ -16,6 +16,7 @@ class Room extends Model
 
     protected $fillable = [
         'name',
+        'image_path',
     ];
 
     public function messages(): HasMany

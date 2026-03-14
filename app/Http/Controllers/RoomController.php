@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateRoom;
-use App\Actions\UpdateRoomMessages;
-use App\Http\Requests\MessageRequest;
-use App\Http\Requests\RoomRequest;
+use App\Actions\UpdateRoom;
+use App\Http\Requests\CreateRoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Room;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,15 +20,20 @@ class RoomController extends Controller
     /**
      * Create a new room with the given name
      */
-    public function store(RoomRequest $request, CreateRoom $createRoom): RedirectResponse
+    public function store(CreateRoomRequest $request, CreateRoom $createRoom): RedirectResponse
     {
+
         $room = $createRoom->execute($request->validated());
 
         return to_route('rooms.show', $room->id);
-
     }
 
-    public function show(Request $request, Room $room): Response
+    public function create(): Response
+    {
+        return Inertia::render('rooms/create');
+    }
+
+    public function show(Room $room): Response
     {
         $this->authorize('view', $room);
 
@@ -38,7 +42,7 @@ class RoomController extends Controller
         $user->load('avatar');
 
         $room->load([
-            'users',
+            'users.avatar',
             'messages',
             'messages.images',
             'messages.user.avatar',
@@ -50,11 +54,10 @@ class RoomController extends Controller
         ]);
     }
 
-    public function update(MessageRequest $request, Room $room, UpdateRoomMessages $updateRoomMessages): RedirectResponse
+    public function update(UpdateRoomRequest $request, Room $room, UpdateRoom $updateRoom): RedirectResponse
     {
-        $this->authorize('update', $room);
 
-        $updateRoomMessages->execute($request->validated(), $room, $request->user());
+        $updateRoom->execute($request->validated(), $room);
 
         return to_route('rooms.show', $room->id, 303);
     }

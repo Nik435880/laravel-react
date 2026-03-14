@@ -44,6 +44,7 @@ class ProfileController extends Controller
 
         $updateUser->execute($user, $validatedData);
 
+
         return to_route('profile.edit');
     }
 

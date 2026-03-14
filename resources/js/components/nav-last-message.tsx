@@ -1,14 +1,16 @@
-import { UserInfo } from '@/components/user-info';
-import { Message, User } from '@/types';
+import { RoomInfo } from '@/components/room-info';
+import { Message, Room, User } from '@/types';
 import { Image } from 'lucide-react';
 import { useEffect } from 'react';
 
 export function NavLastMessage({
     message,
     user,
+    room
 }: {
     message: Message | null;
     user: User;
+    room: Room
 }) {
 
     useEffect(() => {
@@ -18,7 +20,8 @@ export function NavLastMessage({
     if (!message) {
         return (
             <div className="w-full flex flex-col">
-                <UserInfo user={user} />
+                <RoomInfo room={room} />
+
                 <span className="mt-1 text-sm text-gray-400">No messages yet</span>
             </div>
         );
@@ -26,7 +29,8 @@ export function NavLastMessage({
 
     return (
         <div className="w-full flex flex-col">
-            <UserInfo user={user} />
+            <RoomInfo room={room} />
+
             <div className="flex flex-col">
                 <span className="mt-1 text-sm font-semibold">{message?.user?.name}:</span>
 
