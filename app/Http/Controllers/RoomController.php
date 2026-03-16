@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\AddUser;
+use App\Actions\CreateMessage;
 use App\Actions\CreateRoom;
 use App\Actions\UpdateRoom;
 use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Room;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -15,15 +16,12 @@ use Inertia\Response;
 
 class RoomController extends Controller
 {
-    use AuthorizesRequests;
-
-    /**
-     * Create a new room with the given name
-     */
-    public function store(CreateRoomRequest $request, CreateRoom $createRoom): RedirectResponse
+    public function store(CreateRoomRequest $request, CreateRoom $createRoom, AddUser $addUser): RedirectResponse
     {
 
         $room = $createRoom->execute($request->validated());
+
+        $addUser->execute(Auth::user(), $room);
 
         return to_route('rooms.show', $room->id);
     }
@@ -35,9 +33,8 @@ class RoomController extends Controller
 
     public function show(Room $room): Response
     {
-        $this->authorize('view', $room);
 
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
         $user->load('avatar');
 
@@ -54,10 +51,9 @@ class RoomController extends Controller
         ]);
     }
 
-    public function update(UpdateRoomRequest $request, Room $room, UpdateRoom $updateRoom): RedirectResponse
+    public function update(UpdateRoomRequest $request, Room $room,  UpdateRoom $updateRoom): RedirectResponse
     {
-
-        $updateRoom->execute($request->validated(), $room);
+        $updateRoom->execute($request->validated());
 
         return to_route('rooms.show', $room->id, 303);
     }

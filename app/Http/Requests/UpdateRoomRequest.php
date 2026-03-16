@@ -24,8 +24,9 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => 'nullable|string|min:1|',
-            'images.*' => 'nullable|min:1|file|image|max:2048|',
+            "name" => "nullable|string|max:255|min:3",
+            "image_path" => "nullable|string",
+            
         ];
     }
 }

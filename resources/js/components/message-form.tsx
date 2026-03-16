@@ -5,14 +5,13 @@ import { FileImage } from 'lucide-react';
 import { SendHorizontal } from 'lucide-react';
 import { Form } from '@inertiajs/react';
 import { Room } from '@/types';
-import { update } from "@/actions/App/Http/Controllers/RoomController";
-
+import store from "@/actions/App/Http/Controllers/MessageController";
 export const MessageForm = ({ room }: { room: Room }) => {
     return (
         <Form
-            method="PUT"
+            method="POST"
             className="flex h-16 items-center gap-2 border-t-1 px-6 "
-            action={update(room.id)}
+            action={store(room?.id)}
             encType="multipart/form-data"
             resetOnSuccess
         >

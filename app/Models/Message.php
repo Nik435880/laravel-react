@@ -14,8 +14,9 @@ class Message extends Model
     use HasFactory;
 
     protected $fillable = [
-        'text',
+        'text',  
         'user_id',
+        'room_id'     
     ];
 
     public function images(): HasMany

@@ -12,7 +12,7 @@ class SendImages
      */
     public function execute(Message $message, array $attributes): void
     {
-        if (! isset($attributes['images']) || empty($attributes['images'])) {
+        if (!isset($attributes['images'])) {
             return;
         }
 

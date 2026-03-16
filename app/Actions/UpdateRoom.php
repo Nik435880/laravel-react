@@ -2,15 +2,19 @@
 
 namespace App\Actions;
 
-use App\Events\RoomUpdated;
 use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
 
-final class UpdateRoom
+class UpdateRoom
 {
+    public function __construct(
+        private CreateMessage $createMessage
+    ) {}
+
     public function execute(array $attributes, Room $room): Room
     {
-        $room->messages()->create($attributes);
-        RoomUpdated::dispatch($room);
+       $room->update($attributes);
+
         return $room;
     }
 }

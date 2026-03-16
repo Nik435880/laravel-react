@@ -2,43 +2,33 @@
 
 namespace App\Actions;
 
-use App\Events\MessageSent;
-use App\Events\RoomUpdated;
-use App\Models\Message;
 use App\Models\Room;
 use App\Models\User;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
+use App\Actions\SendImages;
+use App\Events\MessageSent;
+use App\Events\RoomUpdated;
 
-final readonly class CreateMessage
+class CreateMessage
 {
     public function __construct(
-        private SendImages $sendImages,
-    ) {}
+        private SendImages $sendImages
+    ){
 
-    /**
-     * @param  array<Message>  $attributes
-     */
-    public function execute(User $user, Room $room, array $attributes): ?Message
+    }
+    public function execute(Room $room, User $user, array $attributes)
     {
 
-        if (empty($attributes['text']) && empty($attributes['images'])) {
-            return null;
-        }
 
-        $message = DB::transaction(function () use ($room, $user, $attributes): Message {
+        $message = $room->messages()->create([
+            'text' => $attributes['text'],
+            'room_id' => $room->id,
+            'user_id' => $user->id,
+        ]);
 
-            $message = $room->messages()->create(Arr::only($attributes, 'text') + ['user_id' => $user->id]);
-            assert($message instanceof Message);
-
-            $this->sendImages->execute($message, Arr::only($attributes, 'images'));
-
-            return $message;
-
-        });
-
-        broadcast(new MessageSent($message))->toOthers();
-        broadcast(new RoomUpdated($room))->toOthers();
+        $this->sendImages->execute($message, $attributes);
+        
+        MessageSent::dispatch($message);
+        RoomUpdated::dispatch($room);
 
         return $message;
 
