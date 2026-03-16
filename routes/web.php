@@ -16,7 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
     Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
 
-    Route::post('/rooms/{room}/messages', MessageController::class)->name('messages.store');
+    Route::post('/rooms/{room}', MessageController::class)->name('messages.store');
 });
 
 require __DIR__ . '/settings.php';
